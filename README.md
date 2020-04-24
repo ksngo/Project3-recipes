@@ -37,3 +37,22 @@ We continually tweak and adjust this template to help give you the best experien
 --------
 
 Happy coding!
+
+
+<!-- mongoDB codes -->
+db.recipes.insert({
+
+    'recipe_name':'Fried Bee Hoon',
+    'steps':['xxxxxxx','xxxxxxxxx'],
+    'ingredients':['xxxxxxxx','xxxxxxxxx'],
+    'tools':['xxxxxxx','xxxxxxxxx'],
+    'cuisine':'chinese',
+    'photos':['xxxxxxx'],
+    'my_rating':7,
+    'date_posted':'2020-04-24'
+    
+
+}
+)
+
+db.recipes.find().pretty()

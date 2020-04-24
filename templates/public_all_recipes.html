@@ -5,8 +5,8 @@
 
 <h1> Recipes </h1>
 
-<table>
-    <thead>
+<table class='table table-bordered'>
+    <thead class='thead-light'>
         <tr>
             <th>Index</th>
             <th>Recipe Name</th>
@@ -19,7 +19,7 @@
     </thead>
         {% for r in results %}
         <tr>
-            <td>{{loops.index}}{{r}}</td>
+            <td>{{loop.index}}</td>
             <td> {{r.recipe_name}} </td>
             <td> {{r.cuisine}}</td>
             <td> {{r._id}}</td>
