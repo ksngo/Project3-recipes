@@ -1,0 +1,31 @@
+{% extends 'template_layout.html'%}
+
+{%block content%}
+
+{{username}}
+
+<form id='add-recipe' method='POST'>
+    <input type='text' name='step1' placeholder='insert step'/>
+    
+
+    <input type='submit' value='submit' />
+</form>
+<button id='add-row' >  Insert Row </button>
+
+<!-- <script>
+
+document.getElementById('add-row').addEventListener('click',addRow)
+
+function addRow() {
+
+    let rowElement = document.createElement('div')
+    rowElement.innerHTML = `
+        <input type='text' name='step1' placeholder='insert step'/>`
+    
+    document.getElementById('add-recipe').appendChild(rowElement)
+
+}
+
+</script> -->
+
+{%endblock%}
