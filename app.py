@@ -35,6 +35,12 @@ def add_recipe(username) :
 def recipes():
 
     get_recipes = client[DB_NAME].recipes.find()
+
+    
+    get_users = list(client[DB_NAME].users.find())
+    
+    
+    
     # get_average_likes = client[DB_NAME].recipes.aggregate(
     #     [
     #         {
@@ -46,8 +52,8 @@ def recipes():
     #         }
     #     ]
     # )
-
-    return render_template('public_all_recipes.html', results=get_recipes )
+    
+    return render_template('public_all_recipes.html', get_recipes= get_recipes , get_users= get_users )
 
 
 

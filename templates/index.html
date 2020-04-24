@@ -6,8 +6,9 @@
 <h1>index</h1>
 
 {%for r in get_recipes%}
-{{r.recipe_name}}
-{{r._id}}
+<ul>
+<li>{{r.recipe_name}} {{r._id}}</li>
+</ul>
 
 {%endfor%}
 

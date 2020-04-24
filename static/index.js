@@ -8,10 +8,6 @@ document.getElementById('add-row').addEventListener('click',addRow)
 
 
 
-
-
-    
-
 function addRow() {
 
     console.log('success in addrow')
