@@ -1,0 +1,15 @@
+{% extends 'template_layout.html'%}
+
+
+{%block content%}
+
+<h1>index</h1>
+
+{%for r in get_recipes%}
+{{r.recipe_name}}
+{{r._id}}
+
+{%endfor%}
+
+
+{%endblock%}
