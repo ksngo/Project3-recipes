@@ -17,6 +17,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
 
+    
     get_recipes = client[DB_NAME].recipes.find()
 
     return render_template('index.html', get_recipes = get_recipes)
@@ -56,12 +57,15 @@ def recipes():
 @app.route('/recipes/<recipe_id>')
 def recipe_display(recipe_id):
 
+    print('^^^^^^^^^just entered recipe_display function')
+    print(recipe_id)
     #####get object type recipe document base on given recipe_id#####
     get_recipe = client[DB_NAME].recipes.find_one({'_id': ObjectId(recipe_id)})
     #####prepare a lists from 0 to variable wher variable is number of steps in recipe####### 
-    recipe_list= list(range(0,len(get_recipe['steps'])))
+    recipe_steps_num_list= list(range(0,len(get_recipe['steps'])))
     #####get object type user document base on the recipe's user_id######
     get_creator = client[DB_NAME].users.find_one({'_id' : ObjectId(get_recipe['user_id'])})
+    print(get_creator)
     # creator_recipes_list = list(range(0,len(get_creator['my_recipes'])))
 
     ######store all the recipes id from the creator into a list##### 
@@ -77,20 +81,20 @@ def recipe_display(recipe_id):
     for r in recipes_id_list :
         recipes_id_list_names.append(find_recipe_name(r))
 
-    print(recipes_id_list_names)
+    ######prepare a lists from 0 to variable where variable is number of recipes for the creator#####
+    # creator_recipes_num_list = list(range(0,len(recipes_id_list_names)))
+
+    print('^^^^^^^^^^^^^^^^whole lists:' , recipes_id_list_names)
     print('-------------------------')
 
-    # print(results.recipe_name)
-    # print(results['recipe_name'])
-    # get_recipe = client[DB_NAME].recipes.find_one({ _id : recipe_id } )
 
-    return render_template('public_recipe.html', get_recipe=get_recipe, recipe_list=recipe_list, get_creator=get_creator, recipes_id_list_names=recipes_id_list_names )
+    return render_template('public_recipe.html', get_recipe=get_recipe, recipe_steps_num_list=recipe_steps_num_list, get_creator=get_creator, recipes_id_list_names=recipes_id_list_names)
 
 #----------------------------------------------------functions--------------------------------------------#
 
 def find_recipe_name (recipe_id) :
     
-    recipe_name = client[DB_NAME].recipes.find_one({'_id':ObjectId(recipe_id)}, {'recipe_name':1})
+    recipe_name = client[DB_NAME].recipes.find_one({'_id':ObjectId(recipe_id)}, {'recipe_name':1})['recipe_name']
     print (recipe_name)
 
     return recipe_name

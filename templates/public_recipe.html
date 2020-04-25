@@ -24,7 +24,7 @@
             <th> tools </th>
         </tr>
     </thead>
-        {%for r in recipe_list %}
+        {%for r in recipe_steps_num_list %}
         <tr>
             <td> {{loop.index}} </td>
             <td> {{get_recipe.steps[r]}} </td>
@@ -62,7 +62,11 @@
     </tr>
     <tr>
         <td> other recipes from contributor </td>
-        <td> <a href='{{url_for('recipe_display' , recipe_id = get_creator.my_recipes[0])}}' > Char Kway Teow </a></td>
+        <td> 
+        {%for r in recipes_id_list_names%}
+        <a href='{{url_for('recipe_display' , recipe_id = get_creator.my_recipes[loop.index0])}}' > {{r}} </a>
+        {%endfor%}
+        </td>
     </tr>
 </table> 
 
