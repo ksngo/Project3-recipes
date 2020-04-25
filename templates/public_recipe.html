@@ -2,13 +2,68 @@
 
 {% block content %}
 
-hello
-{{get_recipe}}
 <h2>{{get_recipe.recipe_name}} </h2>
 
-{% for i in get_recipe.steps %}
+<!-- {% for i in get_recipe.steps %}
 <div> {{loop.index}} {{i}} </div>
-{%endfor%}
+{%endfor%} -->
 
+
+<button type="button" class="btn btn-primary">
+  Profile <span class="badge badge-light">9</span>
+  <span class="sr-only">unread messages</span>
+</button>
+
+
+<table class='table table-bordered'>
+    <thead class='thead-light'>
+        <tr>
+            <th> Step </th>
+            <th> Instructions </th>
+            <th> Ingredients </th>
+            <th> tools </th>
+        </tr>
+    </thead>
+        {%for r in recipe_list %}
+        <tr>
+            <td> {{loop.index}} </td>
+            <td> {{get_recipe.steps[r]}} </td>
+            <td> {{get_recipe.ingredients[r]}} </td>
+            <td> {{get_recipe.tools[r]}} </td>
+        </tr>
+        {%endfor%}
+</table>
+
+
+<table>
+    <tr>
+        <td> Cuisine </td>
+        <td> {{get_recipe.cuisine}} </td>
+    </tr>
+    <tr>
+        <td> Contributor </td>
+        <td> {{get_creator.user_name}} </td>
+    </tr>   
+    <tr>
+        <td> Country </td>
+        <td> {{get_creator.country}} </td>
+    </tr>
+    <tr>
+        <td> Contributor's ratings </td>
+        <td> {{get_recipe.my_rating}} </td>
+    </tr>
+    <tr>
+        <td> date posted </td>
+        <td> {{ get_recipe.date_posted}} </td>
+    </tr>
+    <tr>
+        <td> date last edited </td>
+        <td> {{ get_recipe.date_last_edited}} </td>
+    </tr>
+    <tr>
+        <td> other recipes from contributor </td>
+        <td> <a href='{{url_for('recipe_display' , recipe_id = get_creator.my_recipes[0])}}' > Char Kway Teow </a></td>
+    </tr>
+</table> 
 
 {%endblock%}
