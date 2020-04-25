@@ -35,8 +35,6 @@ def add_recipe(username) :
 def recipes():
 
     get_recipes = client[DB_NAME].recipes.find()
-
-    
     get_users = list(client[DB_NAME].users.find())
     
     
@@ -55,7 +53,16 @@ def recipes():
     
     return render_template('public_all_recipes.html', get_recipes= get_recipes , get_users= get_users )
 
+@app.route('/recipes/<recipe_id>')
+def recipe_display(recipe_id):
 
+    get_recipe = client[DB_NAME].recipes.find_one({'_id': ObjectId(recipe_id)})
+    
+    # print(results.recipe_name)
+    # print(results['recipe_name'])
+    # get_recipe = client[DB_NAME].recipes.find_one({ _id : recipe_id } )
+
+    return render_template('public_recipe.html', get_recipe=get_recipe)
 
 
 if __name__ == '__main__':

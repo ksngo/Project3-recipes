@@ -1,0 +1,14 @@
+{% extends 'template_layout.html' %}
+
+{% block content %}
+
+hello
+{{get_recipe}}
+<h2>{{get_recipe.recipe_name}} </h2>
+
+{% for i in get_recipe.steps %}
+<div> {{loop.index}} {{i}} </div>
+{%endfor%}
+
+
+{%endblock%}
