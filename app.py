@@ -57,17 +57,15 @@ def recipes():
 @app.route('/recipes/<recipe_id>')
 def recipe_display(recipe_id):
 
-    print('^^^^^^^^^just entered recipe_display function')
-    print(recipe_id)
     #####get object type recipe document base on given recipe_id#####
     get_recipe = client[DB_NAME].recipes.find_one({'_id': ObjectId(recipe_id)})
+
     #####prepare a lists from 0 to variable wher variable is number of steps in recipe####### 
     recipe_steps_num_list= list(range(0,len(get_recipe['steps'])))
+
     #####get object type user document base on the recipe's user_id######
     get_creator = client[DB_NAME].users.find_one({'_id' : ObjectId(get_recipe['user_id'])})
-    print(get_creator)
-    # creator_recipes_list = list(range(0,len(get_creator['my_recipes'])))
-
+    
     ######store all the recipes id from the creator into a list##### 
     recipes_id_list =[]
     for r in get_creator['my_recipes'] :
@@ -87,10 +85,17 @@ def recipe_display(recipe_id):
     print('^^^^^^^^^^^^^^^^whole lists:' , recipes_id_list_names)
     print('-------------------------')
 
+    ######find the average likes#####
+    sum_likes = 0
 
-    return render_template('public_recipe.html', get_recipe=get_recipe, recipe_steps_num_list=recipe_steps_num_list, get_creator=get_creator, recipes_id_list_names=recipes_id_list_names)
+    for i in get_recipe['likes'] :
+        sum_likes = sum_likes+int(i['ratings'])
+        
+    avg_likes = sum_likes / len(get_recipe['likes'])
 
-#----------------------------------------------------functions--------------------------------------------#
+    return render_template('public_recipe.html', get_recipe=get_recipe, recipe_steps_num_list=recipe_steps_num_list, get_creator=get_creator, recipes_id_list_names=recipes_id_list_names, avg_likes=avg_likes)
+
+#--------------------------functions----------------------#
 
 def find_recipe_name (recipe_id) :
     
