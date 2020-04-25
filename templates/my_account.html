@@ -1,1 +1,73 @@
-{%extends 'template_layout.html'%}
+{% extends 'template_layout.html' %}
+
+{%block content%}
+
+<h1> My Account </h1>
+    <form method='POST'>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+            <label for="user-name">User Name</label>
+            <input type="text" class="form-control" id="user-name" name="user-name" value="{{get_user.user_name}}">
+            </div>
+            <div class="form-group col-md-6">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" value="{{get_user.password}}">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" id="email" name="email" value="{{get_user.email}}">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="country">Country</label>
+                <input type="text" class="form-control" id="country" name="country" value="{{get_user.country}}">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="birthday">Birthday</label>
+                <input type="text" class="form-control" id="birthday" name="birthday" value="{{get_user.birthday}}">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="ethnic">ethnicity</label>
+                <input type="text" class="form-control" id="ethnic" name="ethnic" value="{{get_user.ethnicity}}">
+            </div>
+        </div>
+
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+            <label for="inputCity">City</label>
+            <input type="text" class="form-control" id="inputCity">
+            </div>
+            <div class="form-group col-md-4">
+            <label for="inputState">State</label>
+            <select id="inputState" class="form-control">
+                <option selected>Choose...</option>
+                <option>...</option>
+            </select>
+            </div>
+            <div class="form-group col-md-2">
+            <label for="inputZip">Zip</label>
+            <input type="text" class="form-control" id="inputZip">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="gridCheck">
+            <label class="form-check-label" for="gridCheck">
+                Check me out
+            </label>
+            </div>
+        </div>
+        <input type="submit" class="btn btn-primary" name="Submit" />
+</form>
+
+
+
+{%endblock%}

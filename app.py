@@ -17,9 +17,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
 
-    
     get_recipes = client[DB_NAME].recipes.find()
-
     return render_template('index.html', get_recipes = get_recipes)
 
 
@@ -95,6 +93,35 @@ def recipe_display(recipe_id):
 
     return render_template('public_recipe.html', get_recipe=get_recipe, recipe_steps_num_list=recipe_steps_num_list, get_creator=get_creator, recipes_id_list_names=recipes_id_list_names, avg_likes=avg_likes)
 
+
+@app.route('/<user_id>')
+def account(user_id):
+
+    get_user = client[DB_NAME].users.find_one({'_id': ObjectId(user_id)})
+
+    return render_template('my_account.html', get_user=get_user)
+
+@app.route('/<user_id>' , methods=['POST'])
+def update_account(user_id):
+    
+    user_name = request.form.get('user-name')
+    print('------------------------', user_name)
+
+    client[DB_NAME].users.update_one({
+        '_id':ObjectId(user_id)
+    }, {
+        "$set": {
+            'user_name' : request.form.get('user-name'),
+            'password' : request.form.get('password'),
+            'email' : request.form.get('email'),
+            'country' : request.form.get('country'),
+            'birthday' : request.form.get('birthday'),
+            'ethnicity' : request.form.get('ethnic')
+        }
+    })
+
+    return redirect(url_for('account', user_id=user_id))
+
 #--------------------------functions----------------------#
 
 def find_recipe_name (recipe_id) :
@@ -103,6 +130,8 @@ def find_recipe_name (recipe_id) :
     print (recipe_name)
 
     return recipe_name
+
+
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
