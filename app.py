@@ -22,12 +22,12 @@ def index():
     return render_template('index.html', get_recipes = get_recipes)
 
 
-@app.route('/<username>/add_recipe/')
-def add_recipe(username) :
+# @app.route('/<username>/add_recipe/')
+# def add_recipe (username) :
 
-    username=username
+#     username=username
 
-    return render_template('add_my_recipe.html', username=username)
+#     return render_template('add_my_recipe.html', username=username)
 
 
 
@@ -138,7 +138,7 @@ def my_recipes(user_id):
         recipe_avg_rating=find_recipe_avg_rating(recipe_id)
         recipes_avg_ratings_list.append(recipe_avg_rating)
 
-    return render_template('my_recipes.html', get_my_recipes=get_my_recipes, recipes_avg_ratings_list=recipes_avg_ratings_list )
+    return render_template('my_recipes.html', get_my_recipes=get_my_recipes, recipes_avg_ratings_list=recipes_avg_ratings_list, user_id=user_id )
 
 
 @app.route('/<user_id>/my_recipes/<recipe_id>')
@@ -157,7 +157,8 @@ def edit_recipe(user_id, recipe_id):
 
 @app.route('/<user_id>/my_recipes/<recipe_id>', methods=['POST'])
 def update_recipe(user_id, recipe_id):
- 
+    
+    ######retrieves the number of recipe steps from user post######
     x= request.form.get("num-steps") 
     
     steps_list=[]
@@ -183,12 +184,19 @@ def update_recipe(user_id, recipe_id):
             "date_last_edited" : datetime.datetime.now().strftime("%x")
         }
     })
-    
 
-    return x
+    return redirect(url_for("my_recipes", user_id=user_id))
 
 
+@app.route("/<user_id>/add_recipe")
+def add_recipe(user_id) :
+
+
+    return render_template("add_recipe.html")
+
+######################################################################    
 ######--------------------------functions----------------------#######
+######################################################################
 
 def find_recipe_name (recipe_id) :
     

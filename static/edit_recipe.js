@@ -45,12 +45,15 @@ function addStep() {
 
 function minusStep() {
 
-    if( confirm('All contents will be erased. Continue to remove last step?')){
-    document.getElementById('steps-rows').lastElementChild.remove()
+    if( document.getElementById('steps-rows').childElementCount == 1) {
+        alert("Step 1 is shown by default.")
+    }else if(confirm('All contents in last step will be erased. Continue to remove last step?')){
+        
+        document.getElementById('steps-rows').lastElementChild.remove()
 
-    NumExistingSteps = document.getElementById("steps-rows").childElementCount
+        NumExistingSteps = document.getElementById("steps-rows").childElementCount
 
-    // **************to count the number of steps at present****************//
-    document.getElementById("num-steps").value = NumExistingSteps
+        // **************to count the number of steps at present****************//
+        document.getElementById("num-steps").value = NumExistingSteps
     }
 }
