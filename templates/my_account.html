@@ -6,12 +6,18 @@
     <form method='POST'>
         <div class="form-row">
             <div class="form-group col-md-6">
-            <label for="user-name">User Name</label>
-            <input type="text" class="form-control" id="user-name" name="user-name" value="{{get_user.user_name}}">
+                <label for="user-name">User Name</label>
+                <input type="text" class="form-control" id="user-name" name="user-name" value="{{get_user.user_name}}">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" value="{{get_user.password}}">
             </div>
             <div class="form-group col-md-6">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password" value="{{get_user.password}}">
+                <label for="password-rekey">Re-key in Password</label><span id="pw-span"> </span>
+                <input type="password" class="form-control" id="password-rekey" name="password-rekey" value="{{get_user.password}}">
             </div>
         </div>
         <div class="form-row">
@@ -69,5 +75,5 @@
 </form>
 
 
-
+<script src="/static/my_account.js"></script>
 {%endblock%}

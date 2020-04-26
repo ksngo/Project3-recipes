@@ -52,7 +52,7 @@ def recipes():
     
     return render_template('public_all_recipes.html', get_recipes= get_recipes , get_users= get_users )
 
-@app.route('/recipes/<recipe_id>')
+@app.route('/recipes/<recipe_id>/')
 def recipe_display(recipe_id):
 
     #####get object type recipe document base on given recipe_id#####
@@ -94,14 +94,14 @@ def recipe_display(recipe_id):
     return render_template('public_recipe.html', get_recipe=get_recipe, recipe_steps_num_list=recipe_steps_num_list, get_creator=get_creator, recipes_id_list_names=recipes_id_list_names, avg_likes=avg_likes)
 
 
-@app.route('/<user_id>')
+@app.route('/<user_id>/')
 def account(user_id):
 
     get_user = client[DB_NAME].users.find_one({'_id': ObjectId(user_id)})
 
     return render_template('my_account.html', get_user=get_user)
 
-@app.route('/<user_id>' , methods=['POST'])
+@app.route('/<user_id>/' , methods=['POST'])
 def update_account(user_id):
     
     user_name = request.form.get('user-name')

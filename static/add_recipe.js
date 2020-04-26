@@ -1,12 +1,10 @@
 
-console.log('success')
-
 $(function(){
+
 document.getElementById('add-row').addEventListener('click',addRow)
 
+
 })
-
-
 
 function addRow() {
 
@@ -18,7 +16,6 @@ function addRow() {
     document.getElementById('add-recipe').appendChild(rowElement)
 
 }
-
 
 
 
