@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 import os 
 import pymongo
+import datetime
 from bson.objectid import ObjectId
 from dotenv import load_dotenv
 from jinja2 import Template
@@ -153,6 +154,38 @@ def edit_recipe(user_id, recipe_id):
 
     return render_template("edit_recipe.html", get_recipe=get_recipe, recipe_steps_num_list=recipe_steps_num_list )
 
+
+@app.route('/<user_id>/my_recipes/<recipe_id>', methods=['POST'])
+def update_recipe(user_id, recipe_id):
+ 
+    x= request.form.get("num-steps") 
+    
+    steps_list=[]
+    ing_list=[]
+    tools_list=[]
+
+    for i in range(0,int(x)) :
+        steps_list.append(request.form.get("step-"+str(i)))
+        ing_list.append(request.form.get("ing-"+str(i)))
+        tools_list.append(request.form.get("tools-"+str(i)))
+    
+
+    client[DB_NAME].recipes.update({'_id': ObjectId(recipe_id)},{
+
+        '$set' : {
+            "recipe_name" :  request.form.get("recipe-name"),
+            "steps" : steps_list,
+            "ingredients" : ing_list,
+            "tools" : tools_list,
+            "cuisine" : request.form.get("cuisine"),
+            "my_rating" : request.form.get("my-rating"),
+            "number_steps" : request.form.get( "num-steps"),
+            "date_last_edited" : datetime.datetime.now().strftime("%x")
+        }
+    })
+    
+
+    return x
 
 
 ######--------------------------functions----------------------#######

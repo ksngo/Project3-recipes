@@ -21,7 +21,10 @@
             <div class="col-sm-6">
                 <input class="form-control" type="text" name="my-rating" value="{{get_recipe.my_rating}}" />
             </div>
-        </div> </br></br>
+        </div> </br>
+
+        <!-- This is hidden; to return number of steps to method post -->
+        <input type="text" id="num-steps" name="num-steps" style="visibility: hidden;" value="{{get_recipe.number_steps}}"/> 
 
         <div id="steps-rows">
             {%for i in recipe_steps_num_list %}
@@ -70,8 +73,11 @@
             </div>
         </div>
 
+        
 
     </form>
+
+    
 
     <script src="/static/edit_recipe.js"></script>
 {%endblock%}

@@ -12,6 +12,9 @@ function addStep() {
 
     NumExistingSteps = document.getElementById("steps-rows").childElementCount
 
+    // **************to count the number of steps at present****************//
+    document.getElementById("num-steps").value = NumExistingSteps + 1
+
     let stepElement = document.createElement('div')
 
     // stepElement.setAttribute("class","form-group row")
@@ -44,5 +47,10 @@ function minusStep() {
 
     if( confirm('All contents will be erased. Continue to remove last step?')){
     document.getElementById('steps-rows').lastElementChild.remove()
+
+    NumExistingSteps = document.getElementById("steps-rows").childElementCount
+
+    // **************to count the number of steps at present****************//
+    document.getElementById("num-steps").value = NumExistingSteps
     }
 }
