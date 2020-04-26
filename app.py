@@ -143,7 +143,15 @@ def my_recipes(user_id):
 @app.route('/<user_id>/my_recipes/<recipe_id>')
 def edit_recipe(user_id, recipe_id):
 
-    return render_template(edit_recipe.html)
+    get_recipe = client[DB_NAME].recipes.find_one({'_id':ObjectId(recipe_id)})
+
+    #####prepare a lists from 0 to variable wher variable is number of steps in recipe####### 
+    recipe_steps_num_list= list(range(0,len(get_recipe['steps'])))  
+
+
+
+
+    return render_template("edit_recipe.html", get_recipe=get_recipe, recipe_steps_num_list=recipe_steps_num_list )
 
 
 
