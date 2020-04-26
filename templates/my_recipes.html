@@ -1,0 +1,44 @@
+{% extends 'template_layout.html' %}
+
+
+{%block content%}
+
+ <h1> My Recipes </h1>
+
+ <table class='table table-bordered'>
+
+    <thead>
+        <tr>
+            <th> Index </th>
+            <th> Recipe Name </th>
+            <th> Cuisine </th>
+            <th> My Rating </th>
+            <th> date posted </th>
+            <th> date last edited </th>
+            <th> public rating </th>
+            <th> </th>
+        </tr>
+    </thead>
+        {%for r in get_my_recipes %}
+        <tr>
+            <td> {{loop.index}} </td>
+            <td> {{r.recipe_name}} </td>
+            <td> {{r.cuisine}} </td>
+            <td> {{r.my_rating}} </td>
+            <td> {{r.date_posted}} </td>
+            <td> {{r.date_last_edited}} </td>
+            <td> {{recipes_avg_ratings_list[loop.index0]}} </td>
+            <td> <a href='#'>Edit</a> <a href='#'>Delete</a> </td>
+        
+        </tr>
+        {%endfor%}
+
+
+
+
+ </table>
+
+
+
+{%endblock%}
+

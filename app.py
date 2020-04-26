@@ -122,7 +122,32 @@ def update_account(user_id):
 
     return redirect(url_for('account', user_id=user_id))
 
-#--------------------------functions----------------------#
+@app.route('/<user_id>/my_recipes/')
+def my_recipes(user_id):
+
+    get_my_recipes = list(client[DB_NAME].recipes.find({'user_id': user_id}))
+
+    num_of_recipes = len(get_my_recipes)
+
+    recipes_avg_ratings_list =[]
+
+    #####prepare average ratings for each recipe stored in a list######
+    for x in range(num_of_recipes):
+        recipe_id=get_my_recipes[x]['_id']
+        recipe_avg_rating=find_recipe_avg_rating(recipe_id)
+        recipes_avg_ratings_list.append(recipe_avg_rating)
+
+    return render_template('my_recipes.html', get_my_recipes=get_my_recipes, recipes_avg_ratings_list=recipes_avg_ratings_list )
+
+
+@app.route('/<user_id>/my_recipes/<recipe_id>')
+def edit_recipe(user_id, recipe_id):
+
+    return render_template(edit_recipe.html)
+
+
+
+######--------------------------functions----------------------#######
 
 def find_recipe_name (recipe_id) :
     
@@ -130,6 +155,20 @@ def find_recipe_name (recipe_id) :
     print (recipe_name)
 
     return recipe_name
+
+def find_recipe_avg_rating (recipe_id) :
+
+    get_my_recipe = client[DB_NAME].recipes.find_one({'_id': ObjectId(recipe_id)})
+    
+    number_of_ratings = len(get_my_recipe['likes'])
+    rating_sum = 0
+    for x in range(number_of_ratings):
+        rating_sum = rating_sum + int(get_my_recipe['likes'][x]['ratings'])
+    
+    recipe_avg_rating = rating_sum / number_of_ratings
+
+    return recipe_avg_rating
+
 
 
 
