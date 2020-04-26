@@ -3,7 +3,7 @@ $(function(){
 
     document.getElementById("add-step").addEventListener("click", addStep)
 
-    // document.getElementById("minus-step").addEventListener("click", minusStep)
+    document.getElementById("minus-step").addEventListener("click", minusStep)
 
 
 })
@@ -38,6 +38,11 @@ function addStep() {
     document.getElementById("steps-rows").appendChild(stepElement)
 
 
-
 }
 
+function minusStep() {
+
+    if( confirm('All contents will be erased. Continue to remove last step?')){
+    document.getElementById('steps-rows').lastElementChild.remove()
+    }
+}
