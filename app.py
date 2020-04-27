@@ -198,8 +198,9 @@ def update_recipe(user_id, recipe_id):
 @app.route("/<user_id>/add_recipe")
 def add_recipe(user_id) :
 
+    user_id=user_id
 
-    return render_template("add_recipe.html")
+    return render_template("add_recipe.html", user_id=user_id)
 
 @app.route("/<user_id>/add_recipe", methods=["POST"])
 def add_recipe_post(user_id) :
