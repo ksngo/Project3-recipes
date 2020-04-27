@@ -156,10 +156,10 @@ def edit_recipe(user_id, recipe_id):
     #####prepare a lists from 0 to variable wher variable is number of steps in recipe####### 
     recipe_steps_num_list= list(range(0,len(get_recipe['steps'])))  
 
+    user_id=user_id
 
 
-
-    return render_template("edit_recipe.html", get_recipe=get_recipe, recipe_steps_num_list=recipe_steps_num_list )
+    return render_template("edit_recipe.html", get_recipe=get_recipe, recipe_steps_num_list=recipe_steps_num_list, user_id=user_id )
 
 
 @app.route('/<user_id>/my_recipes/<recipe_id>', methods=['POST'])
