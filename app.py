@@ -105,8 +105,9 @@ def recipe_display(recipe_id):
 def account(user_id):
 
     get_user = client[DB_NAME].users.find_one({'_id': ObjectId(user_id)})
+    user_id = get_user['_id']
 
-    return render_template('my_account.html', get_user=get_user)
+    return render_template('my_account.html', get_user=get_user, user_id=user_id)
 
 @app.route('/<user_id>/' , methods=['POST'])
 def update_account(user_id):
