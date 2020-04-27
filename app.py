@@ -181,7 +181,7 @@ def update_recipe(user_id, recipe_id):
             "cuisine" : request.form.get("cuisine"),
             "my_rating" : request.form.get("my-rating"),
             "number_steps" : request.form.get( "num-steps"),
-            "date_last_edited" : datetime.datetime.now().strftime("%x")
+            "date_last_edited" : datetime.datetime.now().strftime("%Y-%m-%d")
         }
     })
 
@@ -193,6 +193,40 @@ def add_recipe(user_id) :
 
 
     return render_template("add_recipe.html")
+
+@app.route("/<user_id>/add_recipe", methods=["POST"])
+def add_recipe_post(user_id) :
+
+    num_steps = request.form.get("num-steps-np")
+
+    steps_list=[]
+    ing_list=[]
+    tools_list=[]
+    photos_list=[]
+    likes_list=[]
+
+    for i in range(0, int(num_steps)):
+        steps_list.append(request.form.get("step-"+str(i)))
+        ing_list.append(request.form.get("ing-"+str(i)))
+        tools_list.append(request.form.get("tools-"+str(i)))
+
+    client[DB_NAME].recipes.insert_one({
+        "_id" : ObjectId(),
+        "recipe_name" : request.form.get("recipe-name"),
+        "steps" : steps_list,
+        "ingredients" : ing_list,
+        "tools" : tools_list,
+        "cuisine" : request.form.get("cuisine"),
+        "photos" : photos_list,
+        "my_rating" : request.form.get("my-rating"),
+        "likes" : likes_list,
+        "user_id" : user_id,
+        "date_posted" : datetime.datetime.now().strftime("%Y-%m-%d"),
+        "date_last_edited": "null",
+        "number_steps" : request.form.get("num-steps-np")
+    })
+
+    return redirect(url_for("my_recipes", user_id=user_id ))
 
 ######################################################################    
 ######--------------------------functions----------------------#######
@@ -210,11 +244,17 @@ def find_recipe_avg_rating (recipe_id) :
     get_my_recipe = client[DB_NAME].recipes.find_one({'_id': ObjectId(recipe_id)})
     
     number_of_ratings = len(get_my_recipe['likes'])
-    rating_sum = 0
-    for x in range(number_of_ratings):
-        rating_sum = rating_sum + int(get_my_recipe['likes'][x]['ratings'])
+
+    if (number_of_ratings > 0) :
+        rating_sum = 0
+        for x in range(number_of_ratings):
+            rating_sum = rating_sum + int(get_my_recipe['likes'][x]['ratings'])
     
-    recipe_avg_rating = rating_sum / number_of_ratings
+        recipe_avg_rating = rating_sum / number_of_ratings
+    else:
+
+        recipe_avg_rating ="null"
+
 
     return recipe_avg_rating
 
