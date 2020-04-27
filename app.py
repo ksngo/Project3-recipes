@@ -310,7 +310,7 @@ def reviews(recipe_id) :
     contributor_name = get_user["user_name"]
     
 
-    return render_template("reviews.html", reviews_list=reviews_list, recipe_name=recipe_name , contributor_name=contributor_name )
+    return render_template("reviews.html", reviews_list=reviews_list, recipe_name=recipe_name , contributor_name=contributor_name, recipe_id=recipe_id )
 
 @app.route("/recipes/<recipe_id>/reviews", methods=["POST"])
 def reviews_post(recipe_id) :
