@@ -312,6 +312,40 @@ def reviews(recipe_id) :
 
     return render_template("reviews.html", reviews_list=reviews_list, recipe_name=recipe_name , contributor_name=contributor_name )
 
+@app.route("/recipes/<recipe_id>/reviews", methods=["POST"])
+def reviews_post(recipe_id) :
+
+    get_valid_user = client[DB_NAME].users.find_one({ 
+        "user_name" : request.form.get("username"),
+        "password" : request.form.get("password")
+    })
+
+    print(get_valid_user)
+
+    if get_valid_user == None :
+        flash ("Sorry, no valid user with password found. Please try again.")
+        print("------------------none-------------------")
+
+        return redirect(url_for("reviews_post", recipe_id = recipe_id))
+    else :
+
+        print("--------valid use-----------------")
+        client[DB_NAME].recipes.update_one({
+            "_id" : ObjectId(recipe_id)
+        }, {
+            "$push" : {
+                "likes" : {
+                    "reviewer_name" : request.form.get("username"),
+                    "reviews" : request.form.get("reviews"),
+                    "ratings" : request.form.get("ratings"),
+                    "date" : datetime.datetime.now().strftime("%Y-%m-%d")
+                }
+            }
+        })
+
+        return redirect(url_for("reviews_post", recipe_id=recipe_id))
+
+
 
 ######################################################################    
 ######--------------------------functions----------------------#######
