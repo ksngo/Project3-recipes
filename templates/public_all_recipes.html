@@ -40,15 +40,12 @@
     </thead>
         {% for r in get_recipes %}
         
-        1st {{r.user_id|string()}}
         <tr>
             <td>{{loop.index}}</td>
             <td> <a href= '{{url_for('recipe_display' , recipe_id=r._id)}}'>{{r.recipe_name}}</a> </td>
             <td> {{r.cuisine}}</td>
             {%for i in get_users %}
-                2nd {{i._id|string()}}
                 {%if i._id|string() == r.user_id|string() %}
-                welcome
                     <td> {{i.user_name}} </td>
                     <td> {{i.country}}</td>
                 {%endif%}

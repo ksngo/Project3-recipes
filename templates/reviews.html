@@ -1,0 +1,44 @@
+{% extends "template_layout.html" %}
+
+{%block nav%}
+
+{%endblock%}
+
+{%block content%}
+
+<div class="row">
+  <div class="col">
+    <h1> Reviews </h1>
+  </div>
+  <div class="col col-md-6 col-lg-8">
+  </div>
+  <div class="col">
+    <div class='row'>
+        <b>{{recipe_name}}</b>
+    </div>
+    <div class='row'>
+        <small>{{contributor_name}}</small>
+    </div>
+  </div>
+</div>
+
+<div class="card-columns">
+  
+    {% for i in reviews_list %}
+    <div class="card p-3">
+        <blockquote class="blockquote mb-0 card-body">
+        <p>{{i.reviews}}</p>
+        <footer class="blockquote-footer">
+            <small class="text-muted">
+            {{i.ratings}}/10 by <cite title="Source Title">{{i.reviewer_name}}</cite> on
+            </small>
+            <cite title="Source Title">{{i.date}}</cite>
+        </footer>
+        </blockquote>
+    </div>
+    {%endfor%}
+
+</div>
+
+
+{% endblock %}

@@ -296,7 +296,21 @@ def login_post() :
         user_id = get_user["_id"]
 
         return redirect(url_for("my_recipes", user_id=user_id))
-        
+
+@app.route("/recipes/<recipe_id>/reviews")
+def reviews(recipe_id) :
+
+    get_recipe = client[DB_NAME].recipes.find_one({ "_id" : ObjectId(recipe_id)})
+
+    reviews_list = get_recipe["likes"]
+    recipe_name = get_recipe["recipe_name"]
+
+    contributor_id = get_recipe["user_id"]
+    get_user = client[DB_NAME].users.find_one({ "_id" : ObjectId(contributor_id)})
+    contributor_name = get_user["user_name"]
+    
+
+    return render_template("reviews.html", reviews_list=reviews_list, recipe_name=recipe_name , contributor_name=contributor_name )
 
 
 ######################################################################    
