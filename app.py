@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 import os 
 import pymongo
 import datetime
@@ -14,6 +14,7 @@ DB_NAME ='project3'
 client =pymongo.MongoClient(MONGO_URI)
 
 app = Flask(__name__)
+app.secret_key = "secret key"
 
 @app.route('/')
 def index():
@@ -265,6 +266,35 @@ def create_account_post ():
     print("-------------------------",user_id)
 
     return redirect(url_for("my_recipes", user_id=user_id))
+
+
+@app.route("/login/")
+def login() :
+
+    print("---------------------hello")
+
+    return render_template("login.html")
+
+
+@app.route("/login/", methods=["POST"])
+def login_post() :
+
+    get_user =client[DB_NAME].users.find_one({
+            "email" : request.form.get("email"),
+            "password" : request.form.get("password")
+            })
+    
+    if get_user is None :
+        
+        flash("No matching email and password for account. Please try again.")
+
+        return redirect(url_for("login"))
+    else :
+        
+        user_id = get_user["_id"]
+
+        return redirect(url_for("my_recipes", user_id=user_id))
+        
 
 
 ######################################################################    

@@ -5,12 +5,14 @@
 
 <h1>index</h1>
 
-{%for r in get_recipes%}
+
 <ul>
-<li>{{r.recipe_name}} {{r._id}}</li>
+<li> <a href="{{url_for("recipes")}}")> Start seeing Recipes </a> </li>
+<li> <a href="{{url_for("login")}}"> Login to my Account </a> </li>
+<li> <a href="{{url_for("create_account")}}"> Create new Account User </a></li>
 </ul>
 
-{%endfor%}
+
 
 
 {%endblock%}
