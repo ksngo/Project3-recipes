@@ -85,12 +85,17 @@ def recipe_display(recipe_id):
     print('-------------------------')
 
     ######find the average likes#####
-    sum_likes = 0
 
-    for i in get_recipe['likes'] :
-        sum_likes = sum_likes+int(i['ratings'])
+    if (len(get_recipe["likes"]) > 0) :
+        sum_likes = 0
+        for i in get_recipe['likes'] :
+            sum_likes = sum_likes+int(i['ratings'])
+            
+        avg_likes = sum_likes / len(get_recipe['likes'])
+    
+    else :
         
-    avg_likes = sum_likes / len(get_recipe['likes'])
+        avg_likes ="null"
 
     return render_template('public_recipe.html', get_recipe=get_recipe, recipe_steps_num_list=recipe_steps_num_list, get_creator=get_creator, recipes_id_list_names=recipes_id_list_names, avg_likes=avg_likes)
 
@@ -227,6 +232,40 @@ def add_recipe_post(user_id) :
     })
 
     return redirect(url_for("my_recipes", user_id=user_id ))
+
+
+@app.route("/create_account/")
+def create_account ():
+
+    return render_template("create_account.html")
+
+@app.route("/create_account/", methods=["POST"])
+def create_account_post ():
+
+    my_recipes_list=[]
+    favourites_list=[]
+    email = request.form.get("email")
+
+    client[DB_NAME].users.insert_one({
+
+        "_id" : ObjectId(),
+        "user_name" : request.form.get("user-name"),
+        "password" : request.form.get("password"),
+        "email" : email,
+        "country" : request.form.get("country"),
+        "birthday" : request.form.get("birthday"),
+        "ethnicity" : request.form.get("ethnic"),
+        "my_recipes" : my_recipes_list,
+        "favourites" : favourites_list
+
+    })
+
+    get_user = client[DB_NAME].users.find_one({"email" : email})
+    user_id = get_user["_id"]
+    print("-------------------------",user_id)
+
+    return redirect(url_for("my_recipes", user_id=user_id))
+
 
 ######################################################################    
 ######--------------------------functions----------------------#######
