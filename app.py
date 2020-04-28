@@ -437,56 +437,56 @@ def reviews_post(recipe_id) :
 @app.route("/recipes/sort_date_d/")
 def sort_date_d() :
 
-    get_filter_date = client[DB_NAME].recipes.find().sort( "date_posted" , -1)
+    get_recipes = client[DB_NAME].recipes.find().sort( "date_posted" , -1)
     get_users = list(client[DB_NAME].users.find())
 
-    return render_template("public_all_recipes_filter_date.html", get_filter_date =get_filter_date , get_users=get_users)
+    return render_template("public_all_recipes.html", get_recipes = get_recipes , get_users=get_users)
 
 ##----------------------------Sort by date ascending-----------------------
 @app.route("/recipes/sort_date_a/")
 def sort_date_a() :
 
-    get_filter_date = client[DB_NAME].recipes.find().sort( "date_posted" , 1)
+    get_recipes = client[DB_NAME].recipes.find().sort( "date_posted" , 1)
     get_users = list(client[DB_NAME].users.find())
 
-    return render_template("public_all_recipes_filter_date.html", get_filter_date =get_filter_date , get_users=get_users)
+    return render_template("public_all_recipes.html", get_recipes = get_recipes, get_users=get_users)
 
 
-##----------------------------Sort by cuisine descending-----------------------
+###----------------------------Sort by cuisine descending-----------------------
 @app.route("/recipes/sort_cuisine_d/")
 def sort_cuisine_d() :
 
-    get_filter_date = client[DB_NAME].recipes.find().sort( "cuisine" , -1)
+    get_recipes = client[DB_NAME].recipes.find().sort( "cuisine" , -1)
     get_users = list(client[DB_NAME].users.find())
 
-    return render_template("public_all_recipes_filter_date.html", get_filter_date =get_filter_date , get_users=get_users)
+    return render_template("public_all_recipes.html", get_recipes = get_recipes , get_users=get_users)
 
-##----------------------------Sort by cuisine ascending-----------------------
+###----------------------------Sort by cuisine ascending-----------------------
 @app.route("/recipes/sort_cuisine_a/")
 def sort_cuisine_a() :
 
-    get_filter_date = client[DB_NAME].recipes.find().sort( "cuisine" , 1)
+    get_recipes = client[DB_NAME].recipes.find().sort( "cuisine" , 1)
     get_users = list(client[DB_NAME].users.find())
 
-    return render_template("public_all_recipes_filter_date.html", get_filter_date =get_filter_date , get_users=get_users)
+    return render_template("public_all_recipes.html", get_recipes = get_recipes, get_users=get_users)
 
-##----------------------------Sort by recipe name descending-----------------------
+####----------------------------Sort by recipe name descending-----------------------
 @app.route("/recipes/sort_recipe_d/")
 def sort_recipe_d() :
 
-    get_filter_date = client[DB_NAME].recipes.find().sort( "recipe_name" , -1)
+    get_recipes = client[DB_NAME].recipes.find().sort( "recipe_name" , -1)
     get_users = list(client[DB_NAME].users.find())
 
-    return render_template("public_all_recipes_filter_date.html", get_filter_date =get_filter_date , get_users=get_users)
+    return render_template("public_all_recipes.html", get_recipes = get_recipes , get_users=get_users)
 
-##----------------------------Sort by recipe name ascending-----------------------
+####----------------------------Sort by recipe name ascending-----------------------
 @app.route("/recipes/sort_recipe_a/")
 def sort_recipe_a() :
 
-    get_filter_date = client[DB_NAME].recipes.find().sort( "recipe_name" , 1)
+    get_recipes = client[DB_NAME].recipes.find().sort( "recipe_name" , 1)
     get_users = list(client[DB_NAME].users.find())
 
-    return render_template("public_all_recipes_filter_date.html", get_filter_date =get_filter_date , get_users=get_users)
+    return render_template("public_all_recipes.html", get_recipes = get_recipes , get_users=get_users)
 
    
 #--------------------------functions------------------------

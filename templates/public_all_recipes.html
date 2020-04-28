@@ -30,11 +30,23 @@
     <thead class='thead-light'>
         <tr>
             <th>Index</th>
-            <th>Recipe Name</th>
-            <th>Cuisine</th>
+            <th>
+                <a href="{{url_for('sort_recipe_a')}}" style="text-decoration:none;"><sup><i class="fa fa-sort-asc text-dark" aria-hidden="true"></i></sup></a>
+                Recipe Name
+                <a href="{{url_for('sort_recipe_d')}}" style="text-decoration:none;"><sub><i class="fa fa-sort-desc text-dark" aria-hidden="true"></i></sub></a>
+            </th>
+            <th>
+                <a href="{{url_for('sort_cuisine_a')}}" style="text-decoration:none;"><sup><i class="fa fa-sort-asc text-dark" aria-hidden="true"></i></sup></a>
+                Cuisine
+                <a href="{{url_for('sort_cuisine_d')}}" style="text-decoration:none;"><sub><i class="fa fa-sort-desc text-dark" aria-hidden="true"></i></sub></a>
+            </th>
             <th>Contributor</th>
             <th>Contributor's Country</th>
-            <th>Date Posted</th>
+            <th>
+                <a href="{{url_for('sort_date_a')}}" style="text-decoration:none;"><sup><i class="fa fa-sort-asc text-dark" aria-hidden="true"></i></sup></a>
+                Date Posted
+                <a href="{{url_for('sort_date_d')}}" style="text-decoration:none;"><sub><i class="fa fa-sort-desc text-dark" aria-hidden="true"></i></sub></a>
+            </th>
             <th>Likes</th>
         </tr>
     </thead>
