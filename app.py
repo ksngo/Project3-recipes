@@ -128,6 +128,8 @@ def update_account(user_id):
         }
     })
 
+    flash("Your Account has been updated.")
+
     return redirect(url_for('account', user_id=user_id))
 
 @app.route('/<user_id>/my_recipes/')

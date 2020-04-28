@@ -20,7 +20,9 @@
 
 {%block content%}
 
-<h1>My Account</h1>
+<h1>My Account  </h1> 
+<!-- <small><sup><a href="#" id="edit-account" style="text-decoration:none;"> edit </a> </sup> </small> -->
+
 <form method="POST">
   <div class="form-row">
     <div class="form-group col-md-6">
@@ -31,6 +33,7 @@
         id="user-name"
         name="user-name"
         value="{{get_user.user_name}}"
+        
       />
     </div>
   </div>
@@ -43,6 +46,7 @@
         id="password"
         name="password"
         value="{{get_user.password}}"
+        
       />
     </div>
     <div class="form-group col-md-6">
@@ -54,6 +58,7 @@
         id="password-rekey"
         name="password-rekey"
         value="{{get_user.password}}"
+        
       />
     </div>
   </div>
@@ -66,6 +71,7 @@
         id="email"
         name="email"
         value="{{get_user.email}}"
+        
       />
     </div>
   </div>
@@ -78,6 +84,7 @@
         id="country"
         name="country"
         value="{{get_user.country}}"
+        
       />
     </div>
   </div>
@@ -90,6 +97,7 @@
         id="birthday"
         name="birthday"
         value="{{get_user.birthday}}"
+        
       />
     </div>
   </div>
@@ -102,6 +110,7 @@
         id="ethnic"
         name="ethnic"
         value="{{get_user.ethnicity}}"
+        
       />
     </div>
   </div>
@@ -132,7 +141,8 @@
     </div>
   </div>
   <input type="submit" class="btn btn-primary" name="Submit" />
-</form>
+</form> </br>
+<a href="{{url_for('my_recipes', user_id=user_id)}}"><button class="btn btn-primary"> Exit </button> </a>
 
 <script src="/static/my_account.js"></script>
 {%endblock%}

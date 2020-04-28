@@ -2,7 +2,7 @@ console.log('success')
 $(function(){
 
 document.getElementById('password-rekey').addEventListener('keyup',checkPassword)
-
+// document.getElementById('edit-account').addEventListener('click', editAccount)
 })
 
 
@@ -23,4 +23,17 @@ function checkPassword() {
 
     }
 }
+
+// function editAccount() {
+//     document.getElementById("user-name").readOnly = false
+//     document.getElementById("password").readOnly = false
+//     document.getElementById("password-rekey").readOnly = false
+//     document.getElementById("email").readOnly = false
+//     document.getElementById("country").readOnly = false
+//     document.getElementById("birthday").readOnly = false
+//     document.getElementById("ethnic").readOnly = false
+//     document.getElementById("edit-account").style.opacity = "0"
+//     // document.getElementById("edit-account").style.color = "lightgrey"
+//     document.getElementById("edit-account").style.cursor = "default"
+// }
 
