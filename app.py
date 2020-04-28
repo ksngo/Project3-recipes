@@ -8,13 +8,15 @@ from jinja2 import Template
 load_dotenv()
 
 MONGO_URI = os.environ.get('MONGO_URI')
-print(MONGO_URI)
+# print(MONGO_URI)
 DB_NAME ='project3'
 
 client =pymongo.MongoClient(MONGO_URI)
 
 app = Flask(__name__)
 app.secret_key = "secret key"
+
+#---------------------------------Index /Home page-----------------------------------------
 
 @app.route('/')
 def index():
@@ -23,21 +25,13 @@ def index():
     return render_template('index.html', get_recipes = get_recipes)
 
 
-# @app.route('/<username>/add_recipe/')
-# def add_recipe (username) :
-
-#     username=username
-
-#     return render_template('add_my_recipe.html', username=username)
-
-
+#-------------------------------Public recipes page ---------------------------------------
 
 @app.route('/recipes/')
 def recipes():
 
     get_recipes = client[DB_NAME].recipes.find()
     get_users = list(client[DB_NAME].users.find())
-    
     
     
     # get_average_likes = client[DB_NAME].recipes.aggregate(
@@ -53,6 +47,8 @@ def recipes():
     # )
     
     return render_template('public_all_recipes.html', get_recipes= get_recipes , get_users= get_users )
+
+#-------------------------------Public each recipe page------------------------------------
 
 @app.route('/recipes/<recipe_id>/')
 def recipe_display(recipe_id):
@@ -100,6 +96,7 @@ def recipe_display(recipe_id):
 
     return render_template('public_recipe.html', get_recipe=get_recipe, recipe_steps_num_list=recipe_steps_num_list, get_creator=get_creator, recipes_id_list_names=recipes_id_list_names, avg_likes=avg_likes)
 
+#----------------------------my account info page---------------------------------------
 
 @app.route('/<user_id>/')
 def account(user_id):
@@ -108,6 +105,8 @@ def account(user_id):
     user_id = get_user['_id']
 
     return render_template('my_account.html', get_user=get_user, user_id=user_id)
+
+##--------------------------my account info page Post---------------------------------
 
 @app.route('/<user_id>/' , methods=['POST'])
 def update_account(user_id):
@@ -132,6 +131,8 @@ def update_account(user_id):
 
     return redirect(url_for('account', user_id=user_id))
 
+#---------------------------my recipes page----------------------------------------
+
 @app.route('/<user_id>/my_recipes/')
 def my_recipes(user_id):
 
@@ -149,6 +150,7 @@ def my_recipes(user_id):
 
     return render_template('my_recipes.html', get_my_recipes=get_my_recipes, recipes_avg_ratings_list=recipes_avg_ratings_list, user_id=user_id )
 
+#------------------------------------edit recipe page----------------------------------------
 
 @app.route('/<user_id>/my_recipes/<recipe_id>/edit')
 def edit_recipe(user_id, recipe_id):
@@ -163,6 +165,7 @@ def edit_recipe(user_id, recipe_id):
 
     return render_template("edit_recipe.html", get_recipe=get_recipe, recipe_steps_num_list=recipe_steps_num_list, user_id=user_id )
 
+##----------------------------------edit recipe Post page-----------------------------------
 
 @app.route('/<user_id>/my_recipes/<recipe_id>/edit', methods=['POST'])
 def update_recipe(user_id, recipe_id):
@@ -197,11 +200,14 @@ def update_recipe(user_id, recipe_id):
     return redirect(url_for("my_recipes", user_id=user_id))
 
 
+#----------------------confirm prompt delete recipe page-----------------------------
+
 @app.route("/<user_id>/my_recipes/<recipe_id>/delete")
 def delete_recipe_page (user_id, recipe_id) :
 
     return render_template("delete_recipe.html", user_id=user_id, recipe_id=recipe_id )
 
+##----------------------confirm prompt delete recipe page Post-----------------------------
 
 @app.route("/<user_id>/my_recipes/<recipe_id>/process_delete")
 def delete_recipe (user_id, recipe_id) :
@@ -235,8 +241,6 @@ def delete_recipe (user_id, recipe_id) :
                 "$in": [ObjectId(recipe_id)]
             }
         }
-            
-        
     })
 
     
@@ -246,12 +250,16 @@ def delete_recipe (user_id, recipe_id) :
 
     return redirect(url_for("my_recipes", user_id=user_id))
 
+#----------------------------------add recipe page--------------------------------------
+
 @app.route("/<user_id>/add_recipe")
 def add_recipe(user_id) :
 
     user_id=user_id
 
     return render_template("add_recipe.html", user_id=user_id)
+
+##-------------------------------add recipe page post----------------------------------
 
 @app.route("/<user_id>/add_recipe", methods=["POST"])
 def add_recipe_post(user_id) :
@@ -306,11 +314,14 @@ def add_recipe_post(user_id) :
 
     return redirect(url_for("my_recipes", user_id=user_id ))
 
+#-----------------------create account page---------------------------------------
 
 @app.route("/create_account/")
 def create_account ():
 
     return render_template("create_account.html")
+
+##----------------------create account post---------------------------------------
 
 @app.route("/create_account/", methods=["POST"])
 def create_account_post ():
@@ -339,6 +350,7 @@ def create_account_post ():
 
     return redirect(url_for("my_recipes", user_id=user_id))
 
+#-------------------------login page--------------------------------
 
 @app.route("/login/")
 def login() :
@@ -347,6 +359,7 @@ def login() :
 
     return render_template("login.html")
 
+##-----------------------login page post---------------------------
 
 @app.route("/login/", methods=["POST"])
 def login_post() :
@@ -367,6 +380,8 @@ def login_post() :
 
         return redirect(url_for("my_recipes", user_id=user_id))
 
+#----------------------------------review recipe page------------------------
+
 @app.route("/recipes/<recipe_id>/reviews")
 def reviews(recipe_id) :
 
@@ -382,6 +397,7 @@ def reviews(recipe_id) :
 
     return render_template("reviews.html", reviews_list=reviews_list, recipe_name=recipe_name , contributor_name=contributor_name, recipe_id=recipe_id )
 
+##------------------------------------review recipe page post--------------------
 @app.route("/recipes/<recipe_id>/reviews", methods=["POST"])
 def reviews_post(recipe_id) :
 
@@ -415,11 +431,65 @@ def reviews_post(recipe_id) :
 
         return redirect(url_for("reviews_post", recipe_id=recipe_id))
 
+#----------------------------Sort order------------------------------------------
+
+##---------------------------Sort by date descending------------------------
+@app.route("/recipes/sort_date_d/")
+def sort_date_d() :
+
+    get_filter_date = client[DB_NAME].recipes.find().sort( "date_posted" , -1)
+    get_users = list(client[DB_NAME].users.find())
+
+    return render_template("public_all_recipes_filter_date.html", get_filter_date =get_filter_date , get_users=get_users)
+
+##----------------------------Sort by date ascending-----------------------
+@app.route("/recipes/sort_date_a/")
+def sort_date_a() :
+
+    get_filter_date = client[DB_NAME].recipes.find().sort( "date_posted" , 1)
+    get_users = list(client[DB_NAME].users.find())
+
+    return render_template("public_all_recipes_filter_date.html", get_filter_date =get_filter_date , get_users=get_users)
 
 
-######################################################################    
-######--------------------------functions----------------------#######
-######################################################################
+##----------------------------Sort by cuisine descending-----------------------
+@app.route("/recipes/sort_cuisine_d/")
+def sort_cuisine_d() :
+
+    get_filter_date = client[DB_NAME].recipes.find().sort( "cuisine" , -1)
+    get_users = list(client[DB_NAME].users.find())
+
+    return render_template("public_all_recipes_filter_date.html", get_filter_date =get_filter_date , get_users=get_users)
+
+##----------------------------Sort by cuisine ascending-----------------------
+@app.route("/recipes/sort_cuisine_a/")
+def sort_cuisine_a() :
+
+    get_filter_date = client[DB_NAME].recipes.find().sort( "cuisine" , 1)
+    get_users = list(client[DB_NAME].users.find())
+
+    return render_template("public_all_recipes_filter_date.html", get_filter_date =get_filter_date , get_users=get_users)
+
+##----------------------------Sort by recipe name descending-----------------------
+@app.route("/recipes/sort_recipe_d/")
+def sort_recipe_d() :
+
+    get_filter_date = client[DB_NAME].recipes.find().sort( "recipe_name" , -1)
+    get_users = list(client[DB_NAME].users.find())
+
+    return render_template("public_all_recipes_filter_date.html", get_filter_date =get_filter_date , get_users=get_users)
+
+##----------------------------Sort by recipe name ascending-----------------------
+@app.route("/recipes/sort_recipe_a/")
+def sort_recipe_a() :
+
+    get_filter_date = client[DB_NAME].recipes.find().sort( "recipe_name" , 1)
+    get_users = list(client[DB_NAME].users.find())
+
+    return render_template("public_all_recipes_filter_date.html", get_filter_date =get_filter_date , get_users=get_users)
+
+   
+#--------------------------functions------------------------
 
 def find_recipe_name (recipe_id) :
     
