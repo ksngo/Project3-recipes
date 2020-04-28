@@ -194,9 +194,15 @@ def update_recipe(user_id, recipe_id):
 
     return redirect(url_for("my_recipes", user_id=user_id))
 
-@app.route("/<user_id>/my_recipes/<recipe_id>/delete")
-def delete_recipe (user_id, recipe_id) :
 
+@app.route("/<user_id>/my_recipes/<recipe_id>/delete")
+def delete_recipe_page (user_id, recipe_id) :
+
+    return render_template("delete_recipe.html", user_id=user_id, recipe_id=recipe_id )
+
+
+@app.route("/<user_id>/my_recipes/<recipe_id>/process_delete")
+def delete_recipe (user_id, recipe_id) :
 
     get_user = client[DB_NAME].users.find_one({
         "_id" : ObjectId(user_id)
