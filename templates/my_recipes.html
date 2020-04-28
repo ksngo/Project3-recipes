@@ -45,7 +45,9 @@
             <td> {{r.date_posted}} </td>
             <td> {{r.date_last_edited}} </td>
             <td> {{recipes_avg_ratings_list[loop.index0]}} </td>
-            <td> <a href='{{ url_for('edit_recipe', user_id=r.user_id, recipe_id=r._id)}}'> Edit </a> <a href='#'>Delete</a> </td>
+            <td> <a href='{{ url_for("edit_recipe", user_id=r.user_id, recipe_id=r._id)}}'> Edit </a> <br>
+                <a href='{{url_for("delete_recipe", user_id=r.user_id, recipe_id=r._id)}}'>Delete</a> 
+            </td>
         
         </tr>
         {%endfor%}

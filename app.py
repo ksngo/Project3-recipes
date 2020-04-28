@@ -148,7 +148,7 @@ def my_recipes(user_id):
     return render_template('my_recipes.html', get_my_recipes=get_my_recipes, recipes_avg_ratings_list=recipes_avg_ratings_list, user_id=user_id )
 
 
-@app.route('/<user_id>/my_recipes/<recipe_id>')
+@app.route('/<user_id>/my_recipes/<recipe_id>/edit')
 def edit_recipe(user_id, recipe_id):
 
     get_recipe = client[DB_NAME].recipes.find_one({'_id':ObjectId(recipe_id)})
@@ -162,7 +162,7 @@ def edit_recipe(user_id, recipe_id):
     return render_template("edit_recipe.html", get_recipe=get_recipe, recipe_steps_num_list=recipe_steps_num_list, user_id=user_id )
 
 
-@app.route('/<user_id>/my_recipes/<recipe_id>', methods=['POST'])
+@app.route('/<user_id>/my_recipes/<recipe_id>/edit', methods=['POST'])
 def update_recipe(user_id, recipe_id):
     
     ######retrieves the number of recipe steps from user post######
@@ -194,6 +194,49 @@ def update_recipe(user_id, recipe_id):
 
     return redirect(url_for("my_recipes", user_id=user_id))
 
+@app.route("/<user_id>/my_recipes/<recipe_id>/delete")
+def delete_recipe (user_id, recipe_id) :
+
+
+    get_user = client[DB_NAME].users.find_one({
+        "_id" : ObjectId(user_id)
+    })
+    print("--------HELLO---------------------")
+    print(get_user)
+    print(get_user['user_name'])
+    print(get_user['my_recipes'])
+    print(len(get_user['my_recipes']))
+    print("-----------------------------")
+
+    #####find which array contains the recipe to be deleted#####
+    recipe_pos_in_array = 0
+    for i in range(int(len(get_user["my_recipes"]))) :
+        if get_user["my_recipes"][i] == recipe_id :
+            recipe_pos_in_array = i
+        
+
+    print (recipe_pos_in_array)
+    print (get_user["my_recipes"][recipe_pos_in_array])
+
+    #####delete the recipe_id in the users data######
+    client[DB_NAME].users.update({
+        "_id" : ObjectId(user_id)
+    }, {
+        "$pull" : {
+            "my_recipes" : {
+                "$in": [ObjectId(recipe_id)]
+            }
+        }
+            
+        
+    })
+
+    
+    client[DB_NAME].recipes.remove({
+        "_id" : ObjectId(recipe_id)
+    })
+
+    return redirect(url_for("my_recipes", user_id=user_id))
 
 @app.route("/<user_id>/add_recipe")
 def add_recipe(user_id) :
@@ -205,6 +248,7 @@ def add_recipe(user_id) :
 @app.route("/<user_id>/add_recipe", methods=["POST"])
 def add_recipe_post(user_id) :
 
+    ##### update info into recipes database ######
     num_steps = request.form.get("num-steps-np")
 
     steps_list=[]
@@ -233,6 +277,24 @@ def add_recipe_post(user_id) :
         "date_last_edited": "null",
         "number_steps" : request.form.get("num-steps-np")
     })
+
+    #####update recipe id into users database#####
+    get_recipe_id = client[DB_NAME].recipes.find_one({
+                    "user_id" : user_id ,
+                    "recipe_name" : request.form.get("recipe-name"),
+                    "number_steps" : request.form.get("num-steps-np"),
+                    "my_rating" : request.form.get("my-rating"),
+                    "steps" : steps_list,
+                    "ingredients" : ing_list,
+                    "tools" : tools_list,
+                    })
+
+    recipe_id= get_recipe_id["_id"]
+   
+    client[DB_NAME].users.update_one(
+        { "_id" : ObjectId(user_id)}, 
+        { "$push" : { "my_recipes" : recipe_id } }
+    )
 
     return redirect(url_for("my_recipes", user_id=user_id ))
 
