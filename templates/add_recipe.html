@@ -1,5 +1,32 @@
 {% extends "template_layout.html" %}
 
+{%block head%}
+
+<!-- from uploadcare start guide -->
+<script> UPLOADCARE_PUBLIC_KEY = "{{uploadcare_public_key}}"; </script>
+<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+
+<style>
+  .uploader-button .uploadcare--widget__button_type_open {
+    background-color: #5882e7;
+    margin: 10px;
+  }
+</style>
+
+<script>
+  UPLOADCARE_LOCALE_TRANSLATIONS = {
+    buttons: {
+      choose: {
+        files: {
+          one: 'Upload image'
+        }
+      }
+    }
+  }
+</script>
+
+{%endblock%}
+
 {%block nav %}
 
 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,6 +89,8 @@
 
         <!-- This is hidden; to return number of steps to method post -->
         <input type="text" id="num-steps-np" name="num-steps-np" style="visibility: hidden;" value="1"/> 
+        <!-- This is hidden; to return number of images to method post -->
+        <input type="text" id="num-images-np" name="num-images-np" style="visibility: hidden;" value="1"/> 
 
         <div id="steps-rows">
             <div id="steps-block">
@@ -97,8 +126,23 @@
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label"> Photos </label>
-            <div class="col-sm-6">
+            <div class="col-sm-6" id="image-id">
+                <!-- from uploadcare start guide -->
+                <span class="uploader-button">
+                    <input 
+                        type="hidden"
+                        role="uploadcare-uploader"
+                        name="image-0"
+                        data-tabs="file camera facebook instagram dropbox gdrive" />
+                </span>
+               
+            </div>
                 
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-6">
+                <a href="#" id="add-image-np"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+                <a href="#" id="minus-image-np"><i class="fa fa-minus-circle" aria-hidden="true"></i></a>
             </div>
         </div>
         <div class="form-group row">

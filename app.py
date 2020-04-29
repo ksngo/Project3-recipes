@@ -258,9 +258,11 @@ def delete_recipe (user_id, recipe_id) :
 @app.route("/<user_id>/add_recipe")
 def add_recipe(user_id) :
 
+    ##### pass uploadcare key from .env to html template #####
+    uploadcare_public_key=os.environ.get("UPLOADCARE_PUBLIC_KEY")
     user_id=user_id
 
-    return render_template("add_recipe.html", user_id=user_id)
+    return render_template("add_recipe.html", user_id=user_id, uploadcare_public_key=uploadcare_public_key)
 
 ##-------------------------------add recipe page post----------------------------------
 
@@ -273,13 +275,20 @@ def add_recipe_post(user_id) :
     steps_list=[]
     ing_list=[]
     tools_list=[]
-    photos_list=[]
     likes_list=[]
+    
 
     for i in range(0, int(num_steps)):
         steps_list.append(request.form.get("step-"+str(i)))
         ing_list.append(request.form.get("ing-"+str(i)))
         tools_list.append(request.form.get("tools-"+str(i)))
+
+    num_images = request.form.get("num-images-np")
+    images_list=[]
+    
+    for i in range(0, int(num_images)):
+        images_list.append(request.form.get("image-"+str(i)))
+    print (images_list)
 
     client[DB_NAME].recipes.insert_one({
         "_id" : ObjectId(),
@@ -288,7 +297,7 @@ def add_recipe_post(user_id) :
         "ingredients" : ing_list,
         "tools" : tools_list,
         "cuisine" : string.capwords(request.form.get("cuisine")),
-        "photos" : photos_list,
+        "photos" : images_list,
         "my_rating" : request.form.get("my-rating"),
         "likes" : likes_list,
         "user_id" : user_id,

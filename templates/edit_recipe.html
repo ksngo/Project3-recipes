@@ -99,7 +99,12 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label"> Photos </label>
             <div class="col-sm-6">
-                
+                {%for image in get_recipe.photos %}
+                <div class="inline">
+                <img src="{{image}}" alt="{{get_recipe.recipe_name}} photo" height="100" width="100">
+                <input type="checkbox" id="image-{{loop.index}}" name="image-{{loop.index}}">
+                </div>
+                {%endfor%}
             </div>
         </div>
         <div class="form-group row">
