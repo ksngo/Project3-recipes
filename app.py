@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 import os 
 import pymongo
 import datetime
+import string
 from bson.objectid import ObjectId
 from dotenv import load_dotenv
 from jinja2 import Template
@@ -282,11 +283,11 @@ def add_recipe_post(user_id) :
 
     client[DB_NAME].recipes.insert_one({
         "_id" : ObjectId(),
-        "recipe_name" : request.form.get("recipe-name"),
+        "recipe_name" : string.capwords(request.form.get("recipe-name")),
         "steps" : steps_list,
         "ingredients" : ing_list,
         "tools" : tools_list,
-        "cuisine" : request.form.get("cuisine"),
+        "cuisine" : string.capwords(request.form.get("cuisine")),
         "photos" : photos_list,
         "my_rating" : request.form.get("my-rating"),
         "likes" : likes_list,
@@ -302,7 +303,7 @@ def add_recipe_post(user_id) :
     #####update recipe id into users database#####
     get_recipe_id = client[DB_NAME].recipes.find_one({
                     "user_id" : user_id ,
-                    "recipe_name" : request.form.get("recipe-name"),
+                    "recipe_name" : string.capwords(request.form.get("recipe-name")),
                     "number_steps" : request.form.get("num-steps-np"),
                     "my_rating" : request.form.get("my-rating"),
                     "steps" : steps_list,
