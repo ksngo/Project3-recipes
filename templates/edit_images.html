@@ -1,0 +1,82 @@
+{% extends "template_layout.html" %}
+
+{%block head%}
+
+<!-- from uploadcare start guide -->
+<script> UPLOADCARE_PUBLIC_KEY = "{{uploadcare_public_key}}"; </script>
+<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+
+<style>
+  .uploader-button .uploadcare--widget__button_type_open {
+    background-color: #5882e7;
+    margin: 10px;
+  }
+</style>
+
+<script>
+  UPLOADCARE_LOCALE_TRANSLATIONS = {
+    buttons: {
+      choose: {
+        files: {
+          one: 'Upload image'
+        }
+      }
+    }
+  }
+</script>
+
+{%endblock%}
+
+
+{% block content %}
+
+    <!-- This is hidden; to return number of images to method post -->
+    <input type="text" id="num-images-np" name="num-images-np" style="visibility: hidden;" value="1"/> 
+
+    <form method="POST">
+
+        <h2> Delete Existing Photos <h2>
+        <small><sup> checked to delete</sup> </small>
+        {%for image in get_images.photos %}
+            <div class="inline">
+                <img src="{{image}}" alt="{{get_images.recipe_name}} photo" height="100" width="100">
+                <input type="checkbox" id="image-{{loop.index}}" name="image-{{loop.index}}">
+            </div>
+        {%endfor%}  
+
+        <h2> Add more Photos </h2>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> Photos </label>
+            <div class="col-sm-6" id="image-id">
+                <!-- from uploadcare start guide -->
+                <span class="uploader-button">
+                    <input 
+                        type="hidden"
+                        role="uploadcare-uploader"
+                        name="image-0"
+                        data-tabs="file camera facebook instagram dropbox gdrive" />
+                </span>
+               
+            </div>
+                
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-6">
+                <a href="#" id="add-image-np"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+                <a href="#" id="minus-image-np"><i class="fa fa-minus-circle" aria-hidden="true"></i></a>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-6">
+                <input type="submit" class="btn btn-primary" />
+            </div>
+        </div>
+
+        
+    </form> <br>
+        <a href="{{url_for('update_recipe', user_id=user_id, recipe_id = recipe_id )}}"><button class="btn btn-primary"> Back </button> </a>
+
+
+    <script src="/static/edit_images.js"></script>
+
+{% endblock %}

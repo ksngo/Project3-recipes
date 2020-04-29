@@ -94,7 +94,7 @@ function minusImage() {
 
     if (NumOfSpan > 1) {
         document.getElementById("image-id").lastElementChild.remove()
-        document.getElementById("num-images").value() = NumOfSpan - 1
+        document.getElementById("num-images-np").value = NumOfSpan - 1
     } else {
         alert(" An Image Upload button shown by default.")
     }

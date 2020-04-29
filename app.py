@@ -164,9 +164,10 @@ def edit_recipe(user_id, recipe_id):
     recipe_steps_num_list= list(range(0,len(get_recipe['steps'])))  
 
     user_id=user_id
+    recipe_id=recipe_id
 
 
-    return render_template("edit_recipe.html", get_recipe=get_recipe, recipe_steps_num_list=recipe_steps_num_list, user_id=user_id )
+    return render_template("edit_recipe.html", get_recipe=get_recipe, recipe_steps_num_list=recipe_steps_num_list, user_id=user_id, recipe_id=recipe_id )
 
 ##----------------------------------edit recipe Post page-----------------------------------
 
@@ -201,6 +202,20 @@ def update_recipe(user_id, recipe_id):
     })
 
     return redirect(url_for("my_recipes", user_id=user_id))
+
+###------------------ edit images page -----------------------------------------
+@app.route('/<user_id>/my_recipes/<recipe_id>/edit_images')
+def edit_images(user_id , recipe_id) :
+
+    get_images = client[DB_NAME].recipes.find_one({
+                "_id" : ObjectId(recipe_id)
+                },{ "photos" : 1})
+
+    user_id=user_id
+    recipe_id=recipe_id
+
+    return render_template("edit_images.html", get_images = get_images, user_id=user_id, recipe_id=recipe_id)
+
 
 
 #----------------------confirm prompt delete recipe page-----------------------------
