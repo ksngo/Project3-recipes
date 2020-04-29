@@ -342,9 +342,9 @@ def create_account_post ():
         "user_name" : request.form.get("user-name"),
         "password" : request.form.get("password"),
         "email" : email,
-        "country" : request.form.get("country"),
+        "country" : string.capwords(request.form.get("country")),
         "birthday" : request.form.get("birthday"),
-        "ethnicity" : request.form.get("ethnic"),
+        "ethnicity" : string.capwords(request.form.get("ethnic")),
         "my_recipes" : my_recipes_list,
         "favourites" : favourites_list
 
