@@ -189,11 +189,11 @@ def update_recipe(user_id, recipe_id):
     client[DB_NAME].recipes.update({'_id': ObjectId(recipe_id)},{
 
         '$set' : {
-            "recipe_name" :  request.form.get("recipe-name"),
+            "recipe_name" :  string.capwords(request.form.get("recipe-name")),
             "steps" : steps_list,
             "ingredients" : ing_list,
             "tools" : tools_list,
-            "cuisine" : request.form.get("cuisine"),
+            "cuisine" : string.capwords(request.form.get("cuisine")),
             "my_rating" : request.form.get("my-rating"),
             "number_steps" : request.form.get( "num-steps"),
             "date_last_edited" : datetime.datetime.now().strftime("%Y-%m-%d")
