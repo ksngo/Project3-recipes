@@ -47,8 +47,16 @@
                 Date Posted
                 <a href="{{url_for('sort_date_d')}}" style="text-decoration:none;"><sub><i class="fa fa-sort-desc text-dark" aria-hidden="true"></i></sub></a>
             </th>
-            <th>Likes</th>
-            <th> Reviews </th>
+            <th>
+                <a href="{{url_for('sort_ratings_a')}}" style="text-decoration:none;"><sup><i class="fa fa-sort-asc text-dark" aria-hidden="true"></i></sup></a>
+                Ratings
+                <a href="{{url_for('sort_ratings_d')}}" style="text-decoration:none;"><sub><i class="fa fa-sort-desc text-dark" aria-hidden="true"></i></sub></a>
+            </th>
+            <th> 
+                <a href="{{url_for('sort_reviews_a')}}" style="text-decoration:none;"><sup><i class="fa fa-sort-asc text-dark" aria-hidden="true"></i></sup></a>
+                Reviews 
+                <a href="{{url_for('sort_reviews_d')}}" style="text-decoration:none;"><sub><i class="fa fa-sort-desc text-dark" aria-hidden="true"></i></sub></a>
+            </th>
         </tr>
     </thead>
         {% for r in get_recipes %}

@@ -517,6 +517,41 @@ def sort_recipe_a() :
 
     return render_template("public_all_recipes.html", get_recipes = get_recipes , get_users=get_users)
 
+#####--------------------------Sort by average ratings descending-----------------------------
+@app.route("/recipes/sort_likes_d")
+def sort_ratings_d() :
+
+    get_recipes = client[DB_NAME].recipes.find().sort( "avg_likes" , -1)
+    get_users = list(client[DB_NAME].users.find())
+
+    return render_template("public_all_recipes.html", get_recipes = get_recipes , get_users=get_users)
+
+#####--------------------------Sort by average ratings acscending-----------------------------
+@app.route("/recipes/sort_likes_a")
+def sort_ratings_a() :
+
+    get_recipes = client[DB_NAME].recipes.find().sort( "avg_likes" , 1)
+    get_users = list(client[DB_NAME].users.find())
+
+    return render_template("public_all_recipes.html", get_recipes = get_recipes , get_users=get_users)
+
+######--------------------------Sort by number reviews descending-----------------------------
+@app.route("/recipes/sort_reviews_d")
+def sort_reviews_d() :
+
+    get_recipes = client[DB_NAME].recipes.find().sort( "num_reviews" , -1)
+    get_users = list(client[DB_NAME].users.find())
+
+    return render_template("public_all_recipes.html", get_recipes = get_recipes , get_users=get_users)
+
+######--------------------------Sort by number reviews ascending-----------------------------
+@app.route("/recipes/sort_reviews_a")
+def sort_reviews_a() :
+
+    get_recipes = client[DB_NAME].recipes.find().sort( "num_reviews" , 1)
+    get_users = list(client[DB_NAME].users.find())
+
+    return render_template("public_all_recipes.html", get_recipes = get_recipes , get_users=get_users)
    
 #--------------------------functions------------------------
 
@@ -538,7 +573,7 @@ def find_recipe_avg_rating (recipe_id) :
         for x in range(number_of_ratings):
             rating_sum = rating_sum + int(get_my_recipe['likes'][x]['ratings'])
     
-        recipe_avg_rating = rating_sum / number_of_ratings
+        recipe_avg_rating = str(round(float(rating_sum / number_of_ratings),2))
     else:
 
         recipe_avg_rating ="null"
