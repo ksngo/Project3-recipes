@@ -35,8 +35,7 @@
 
 <button type="button" class="btn btn-primary">
   <a href="{{url_for('reviews', recipe_id = get_recipe._id )}}"  style="text-decoration:none; color:white;">
-   Likes <span class="badge badge-light">{{avg_likes}}</span></a>
-  
+   Ratings / Reviews <span class="badge badge-light">{{avg_likes}} / {{get_recipe.num_reviews}}</span></a>
 </button>
 
 

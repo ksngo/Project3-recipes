@@ -40,14 +40,15 @@
                 Cuisine
                 <a href="{{url_for('sort_cuisine_d')}}" style="text-decoration:none;"><sub><i class="fa fa-sort-desc text-dark" aria-hidden="true"></i></sub></a>
             </th>
-            <th>Contributor</th>
-            <th>Contributor's Country</th>
+            <th>From</th>
+            <th>Country</th>
             <th>
                 <a href="{{url_for('sort_date_a')}}" style="text-decoration:none;"><sup><i class="fa fa-sort-asc text-dark" aria-hidden="true"></i></sup></a>
                 Date Posted
                 <a href="{{url_for('sort_date_d')}}" style="text-decoration:none;"><sub><i class="fa fa-sort-desc text-dark" aria-hidden="true"></i></sub></a>
             </th>
             <th>Likes</th>
+            <th> Reviews </th>
         </tr>
     </thead>
         {% for r in get_recipes %}
@@ -64,9 +65,23 @@
             {%endfor%}
 
             <td> {{r.date_posted}} </td>
-            <td> </td>
+            
+            <!-- {%for i in get_avg_likes %}
+                {%if i._id == r._id %}
+                    <td> {{i.trunclikes}} </td>
+                {%endif%}
+            {%endfor%} -->
+
+            {%if r.num_reviews == 0 %}
+                <td> Null </td>
+            {%else%}
+                <td> {{r.avg_likes}} </td>
+            {%endif%}
+
+            <td> {{r.num_reviews}}</td>
         </tr>
         {%endfor%}
+
 </table>
 
 {%endblock%}

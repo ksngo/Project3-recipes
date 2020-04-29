@@ -34,18 +34,20 @@ def recipes():
     get_users = list(client[DB_NAME].users.find())
     
     
-    # get_average_likes = client[DB_NAME].recipes.aggregate(
-    #     [
+    # get_avg_likes = list(client[DB_NAME].recipes.aggregate(
+    #     [ { "$unwind" : "$likes"},
     #         {
-    #          $group:
+    #          "$group":
     #             {
-    #              _id: "$item",
-    #              avglikes: {$avg: "$likes"}
+    #                 "_id" : "$_id",
+    #                 "avglikes": {"$avg":  "$likes.ratings" }
     #             }
-    #         }
+    #         },
+    #         { "$project": { "trunclikes" : { "$trunc": [ "$avglikes", 2 ] } } }
     #     ]
-    # )
-    
+    # ))
+
+
     return render_template('public_all_recipes.html', get_recipes= get_recipes , get_users= get_users )
 
 #-------------------------------Public each recipe page------------------------------------
@@ -88,7 +90,7 @@ def recipe_display(recipe_id):
         for i in get_recipe['likes'] :
             sum_likes = sum_likes+int(i['ratings'])
             
-        avg_likes = sum_likes / len(get_recipe['likes'])
+        avg_likes = round((sum_likes / len(get_recipe['likes'])),2)
     
     else :
         
@@ -291,7 +293,10 @@ def add_recipe_post(user_id) :
         "user_id" : user_id,
         "date_posted" : datetime.datetime.now().strftime("%Y-%m-%d"),
         "date_last_edited": "null",
-        "number_steps" : request.form.get("num-steps-np")
+        "number_steps" : request.form.get("num-steps-np"),
+        "avg_likes" : "0" ,
+        "num_reviews" : 0 
+
     })
 
     #####update recipe id into users database#####
@@ -401,13 +406,17 @@ def reviews(recipe_id) :
 @app.route("/recipes/<recipe_id>/reviews", methods=["POST"])
 def reviews_post(recipe_id) :
 
+
+
+
+
     get_valid_user = client[DB_NAME].users.find_one({ 
         "user_name" : request.form.get("username"),
         "password" : request.form.get("password")
     })
 
     print(get_valid_user)
-
+    
     if get_valid_user == None :
         flash ("Sorry, no valid user with password found. Please try again.")
         print("------------------none-------------------")
@@ -426,6 +435,26 @@ def reviews_post(recipe_id) :
                     "ratings" : request.form.get("ratings"),
                     "date" : datetime.datetime.now().strftime("%Y-%m-%d")
                 }
+            }
+        })
+        
+        #####update the average ratings and number of reviews in document#####
+        get_recipe = client[DB_NAME].recipes.find_one({ "_id" : ObjectId(recipe_id) })
+
+        num_reviews = get_recipe["num_reviews"] + 1
+        avg_likes = str(
+            round(
+                (float(get_recipe["avg_likes"])*(int(num_reviews)-1) + int(request.form.get("ratings")))/int(num_reviews)
+                ,2)
+            
+            )
+        
+        client[DB_NAME].recipes.update_one({
+            "_id" : ObjectId(recipe_id)
+        }, {
+            "$set" : {
+                "avg_likes" : avg_likes ,
+                "num_reviews" : num_reviews
             }
         })
 
