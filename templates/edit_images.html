@@ -31,7 +31,7 @@
 {% block content %}
 
     <!-- This is hidden; to return number of images to method post -->
-    <input type="text" id="num-images-np" name="num-images-np" style="visibility: hidden;" value="1"/> 
+    <input type="text" id="num-images" name="num-images" style="visibility: hidden;" value="1"/> 
 
     <form method="POST">
 
@@ -40,7 +40,7 @@
         {%for image in get_images.photos %}
             <div class="inline">
                 <img src="{{image}}" alt="{{get_images.recipe_name}} photo" height="100" width="100">
-                <input type="checkbox" id="image-{{loop.index}}" name="image-{{loop.index}}">
+                <input type="checkbox" id="image-exist-{{loop.index}}" name="image-exist-{{loop.index}}">
             </div>
         {%endfor%}  
 

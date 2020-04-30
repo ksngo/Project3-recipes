@@ -153,7 +153,7 @@ def my_recipes(user_id):
 
     return render_template('my_recipes.html', get_my_recipes=get_my_recipes, recipes_avg_ratings_list=recipes_avg_ratings_list, user_id=user_id )
 
-#------------------------------------edit recipe page----------------------------------------
+#------------------------------------EDIT recipe page----------------------------------------
 
 @app.route('/<user_id>/my_recipes/<recipe_id>/edit')
 def edit_recipe(user_id, recipe_id):
@@ -169,7 +169,7 @@ def edit_recipe(user_id, recipe_id):
 
     return render_template("edit_recipe.html", get_recipe=get_recipe, recipe_steps_num_list=recipe_steps_num_list, user_id=user_id, recipe_id=recipe_id )
 
-##----------------------------------edit recipe Post page-----------------------------------
+##----------------------------------EDIT recipe Post page-----------------------------------
 
 @app.route('/<user_id>/my_recipes/<recipe_id>/edit', methods=['POST'])
 def update_recipe(user_id, recipe_id):
@@ -203,7 +203,7 @@ def update_recipe(user_id, recipe_id):
 
     return redirect(url_for("my_recipes", user_id=user_id))
 
-###------------------ edit images page -----------------------------------------
+###------------------ EDIT images page -----------------------------------------
 @app.route('/<user_id>/my_recipes/<recipe_id>/edit_images')
 def edit_images(user_id , recipe_id) :
 
@@ -216,6 +216,36 @@ def edit_images(user_id , recipe_id) :
 
     return render_template("edit_images.html", get_images = get_images, user_id=user_id, recipe_id=recipe_id)
 
+####-----------------------EDIT images post page------------------------------------
+@app.route('/<user_id>/my_recipes/<recipe_id>/edit_images', methods=["POST"])
+def edit_images_post(user_id, recipe_id) :
+
+
+    ##### delete any existing photo #####
+    get_images = client[DB_NAME].recipes.find_one({
+        "_id" : ObjectId(recipe_id)
+    },{ "photos" : 1})
+
+    num_exist_images = len(get_images["photos"])
+
+    print(num_images)
+
+    for i in num_exist_images :
+        if response.form.get("image-exist-${i}") :
+            client[DB_NAME].recipes.update({
+                "_id" :ObjectId(recipe_id)
+            }, { "$pull" : { "$in" : response.form.get("image-exist-${i}")}  })
+
+    ##### to add any new photos #####
+    num_images = response.form.get("num-images")
+
+    for i in range(0, num_images) :
+        client[DB_NAME].recipes.update({
+            "_id" : ObjectId(recipe_id)
+        },{ 
+            "$push" : {"photos" : response.form.get("images-${i}") }
+        })
+    
 
 
 #----------------------confirm prompt delete recipe page-----------------------------
@@ -268,7 +298,7 @@ def delete_recipe (user_id, recipe_id) :
 
     return redirect(url_for("my_recipes", user_id=user_id))
 
-#----------------------------------add recipe page--------------------------------------
+#----------------------------------ADD recipe page--------------------------------------
 
 @app.route("/<user_id>/add_recipe")
 def add_recipe(user_id) :
@@ -279,7 +309,7 @@ def add_recipe(user_id) :
 
     return render_template("add_recipe.html", user_id=user_id, uploadcare_public_key=uploadcare_public_key)
 
-##-------------------------------add recipe page post----------------------------------
+##-------------------------------ADD recipe page post----------------------------------
 
 @app.route("/<user_id>/add_recipe", methods=["POST"])
 def add_recipe_post(user_id) :
@@ -300,10 +330,12 @@ def add_recipe_post(user_id) :
 
     num_images = request.form.get("num-images-np")
     images_list=[]
+    print("--------------------testing no image---------------------")
+    print(images_list)
     
     for i in range(0, int(num_images)):
-        images_list.append(request.form.get("image-"+str(i)))
-    print (images_list)
+        if request.form.get("image-"+str(i)) : 
+            images_list.append(request.form.get("image-"+str(i)))
 
     client[DB_NAME].recipes.insert_one({
         "_id" : ObjectId(),
