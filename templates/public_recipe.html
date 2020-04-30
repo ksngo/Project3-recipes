@@ -92,6 +92,17 @@
         {%endfor%}
         </td>
     </tr>
-</table> 
+</table> </br>
+
+<div class="card-columns">
+  
+     {% for i in get_recipe.photos %}
+        <div class="card">
+            <img src="{{i}}" class="card-img-top" alt="image {{loop.index0}}">
+        </div>
+    {%endfor%}
+  
+</div>
+
 
 {%endblock%}
