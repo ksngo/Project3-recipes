@@ -14,7 +14,61 @@
 </style>
 
 <script>
+
+    //--------------------------from uploadcare to limit file size--------------------------//
+
+function fileSizeLimit(min, max) {
+  return function(fileInfo) {
+    if (fileInfo.size === null) {
+      return
+    }
+    if (min && fileInfo.size < min) {
+      throw new Error('fileMinimalSize')
+    }
+    if (max && fileInfo.size > max) {
+      throw new Error('fileMaximumSize')
+    }
+  }
+}
+
+$(function() {
+  $('[role=uploadcare-uploader]').each(function() {
+    var input = $(this)
+
+    if (!input.data('minSize') && !input.data('maxSize')) {
+      return
+    }
+    var widget = uploadcare.Widget(input)
+
+widget.validators.push(fileSizeLimit(input.data('minSize'), input.data('maxSize')))
+  })
+})
+
   UPLOADCARE_LOCALE_TRANSLATIONS = {
+    errors: {
+    fileMinimalSize: 'File is too small',
+    fileMaximumSize: 'File is too large',
+  },
+    
+    dialog: {
+    tabs: {
+      preview: {
+        error: {
+          fileMinimalSize: {
+            title: 'Title.',
+            text: 'Text.',
+            back: 'Back',
+          },
+          fileMaximumSize: {
+            title: 'Title.',
+            text: 'Text.',
+            back: 'Back',
+          },
+        },
+      },
+    },
+  },
+
     buttons: {
       choose: {
         files: {
@@ -23,6 +77,7 @@
       }
     }
   }
+
 </script>
 
 {%endblock%}
@@ -30,7 +85,6 @@
 
 {% block content %}
 
-    
 
     <form method="POST">
 
@@ -54,11 +108,14 @@
             <div class="col-sm-6" id="image-id">
                 <!-- from uploadcare start guide -->
                 <span class="uploader-button">
+                    <code>max size per image is 1Mb</code><br />
                     <input 
                         type="hidden"
                         role="uploadcare-uploader"
                         name="image-0"
-                        data-tabs="file camera facebook instagram dropbox gdrive" />
+                        data-tabs="file camera facebook instagram dropbox gdrive"
+                        data-max-size="1048576"
+                         />
                 </span>
                
             </div>

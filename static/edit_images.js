@@ -19,18 +19,46 @@ function addImage() {
 
     imageElement.classList.add("uploader-button")
     imageElement.innerHTML = `
-    
+            
                 <input 
                         type="hidden"
                         role="uploadcare-uploader"
                         name="image-${NumOfSpan}"
-                        data-tabs="file camera facebook instagram dropbox gdrive" />
+                        data-tabs="file camera facebook instagram dropbox gdrive"
+                        data-max-size="1048576"
+                        />
     
     `
 
     document.getElementById("image-id").appendChild(imageElement)
 
-    
+    // --------------------------upload care-----------------------------------//
+    function fileSizeLimit(min, max) {
+        return function(fileInfo) {
+            if (fileInfo.size === null) {
+            return
+            }
+            if (min && fileInfo.size < min) {
+            throw new Error('fileMinimalSize')
+            }
+            if (max && fileInfo.size > max) {
+            throw new Error('fileMaximumSize')
+            }
+        }
+        }
+
+    $(function() {
+        $('[role=uploadcare-uploader]').each(function() {
+            var input = $(this)
+
+            if (!input.data('minSize') && !input.data('maxSize')) {
+            return
+            }
+            var widget = uploadcare.Widget(input)
+
+        widget.validators.push(fileSizeLimit(input.data('minSize'), input.data('maxSize')))
+  })
+})
 }
 
 function minusImage() {
@@ -45,3 +73,7 @@ function minusImage() {
     }
     
 }
+
+
+
+
