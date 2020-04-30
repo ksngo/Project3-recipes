@@ -419,7 +419,8 @@ def create_account_post ():
         "birthday" : request.form.get("birthday"),
         "ethnicity" : string.capwords(request.form.get("ethnic")),
         "my_recipes" : my_recipes_list,
-        "favourites" : favourites_list
+        "favourites" : favourites_list,
+        "first_joined" : datetime.datetime.now().strftime("%Y-%m-%d")
 
     })
 
