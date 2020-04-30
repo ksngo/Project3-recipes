@@ -207,6 +207,9 @@ def update_recipe(user_id, recipe_id):
 @app.route('/<user_id>/my_recipes/<recipe_id>/edit_images')
 def edit_images(user_id , recipe_id) :
 
+    ##### pass uploadcare key from .env to html template #####
+    uploadcare_public_key=os.environ.get("UPLOADCARE_PUBLIC_KEY")
+
     get_images = client[DB_NAME].recipes.find_one({
                 "_id" : ObjectId(recipe_id)
                 },{ "photos" : 1})
@@ -214,12 +217,14 @@ def edit_images(user_id , recipe_id) :
     user_id=user_id
     recipe_id=recipe_id
 
-    return render_template("edit_images.html", get_images = get_images, user_id=user_id, recipe_id=recipe_id)
+    return render_template("edit_images.html", get_images = get_images, user_id=user_id, recipe_id=recipe_id, uploadcare_public_key=uploadcare_public_key)
 
 ####-----------------------EDIT images post page------------------------------------
 @app.route('/<user_id>/my_recipes/<recipe_id>/edit_images', methods=["POST"])
 def edit_images_post(user_id, recipe_id) :
 
+    user_id = user_id
+    recipe_id=recipe_id
 
     ##### delete any existing photo #####
     get_images = client[DB_NAME].recipes.find_one({
@@ -228,24 +233,32 @@ def edit_images_post(user_id, recipe_id) :
 
     num_exist_images = len(get_images["photos"])
 
-    print(num_images)
-
-    for i in num_exist_images :
-        if response.form.get("image-exist-${i}") :
-            client[DB_NAME].recipes.update({
+    for i in range(0,num_exist_images) :
+        print("step 1-----------------------")
+        print("image-exist-"+str(i))
+        print(request.form.get("image-exist-"+str(i)))
+        if request.form.get("image-exist-"+str(i)) :
+            print("step2------------------------")
+            client[DB_NAME].recipes.update_one({
                 "_id" :ObjectId(recipe_id)
-            }, { "$pull" : { "$in" : response.form.get("image-exist-${i}")}  })
+            }, { "$pull" : { "photos" : { "$in" : [request.form.get("image-exist-url-"+str(i))]}}  })
 
     ##### to add any new photos #####
-    num_images = response.form.get("num-images")
-
-    for i in range(0, num_images) :
-        client[DB_NAME].recipes.update({
-            "_id" : ObjectId(recipe_id)
-        },{ 
-            "$push" : {"photos" : response.form.get("images-${i}") }
-        })
+    num_images = request.form.get("num-images-edit-pg")
     
+
+    for i in range(0, int(num_images)) :
+        print("step3---------------------")
+        print(request.form.get("image-"+str(i)))
+        if request.form.get("image-"+str(i)) :
+
+            client[DB_NAME].recipes.update({
+                "_id" : ObjectId(recipe_id)
+            },{ 
+                "$push" : {"photos" : request.form.get("image-"+str(i)) }
+            })
+    
+    return redirect(url_for("edit_images_post", user_id=user_id, recipe_id= recipe_id))
 
 
 #----------------------confirm prompt delete recipe page-----------------------------

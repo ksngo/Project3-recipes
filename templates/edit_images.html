@@ -30,17 +30,21 @@
 
 {% block content %}
 
-    <!-- This is hidden; to return number of images to method post -->
-    <input type="text" id="num-images" name="num-images" style="visibility: hidden;" value="1"/> 
+    
 
     <form method="POST">
 
         <h2> Delete Existing Photos <h2>
         <small><sup> checked to delete</sup> </small>
+
+        <!-- This is hidden; to return number of images to method post -->
+        <input type="text" id="num-images-edit-pg" name="num-images-edit-pg" style="visibility: hidden;" value="1"/> 
+
         {%for image in get_images.photos %}
             <div class="inline">
-                <img src="{{image}}" alt="{{get_images.recipe_name}} photo" height="100" width="100">
-                <input type="checkbox" id="image-exist-{{loop.index}}" name="image-exist-{{loop.index}}">
+                <img src="{{image}}" alt="{{get_images.recipe_name}} photo" height="100" width="100" >
+                <input type="checkbox" name="image-exist-{{loop.index0}}" />
+                <input type="text" name="image-exist-url-{{loop.index0}}" value="{{image}}" style="visibility: hidden;"  />
             </div>
         {%endfor%}  
 
@@ -62,8 +66,8 @@
         </div>
         <div class="form-group row">
             <div class="col-sm-6">
-                <a href="#" id="add-image-np"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
-                <a href="#" id="minus-image-np"><i class="fa fa-minus-circle" aria-hidden="true"></i></a>
+                <a href="#" id="add-image-edit-pg"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+                <a href="#" id="minus-image-edit-pg"><i class="fa fa-minus-circle" aria-hidden="true"></i></a>
             </div>
         </div>
         <div class="form-group row">
@@ -74,7 +78,7 @@
 
         
     </form> <br>
-        <a href="{{url_for('update_recipe', user_id=user_id, recipe_id = recipe_id )}}"><button class="btn btn-primary"> Back </button> </a>
+    <a href="{{url_for('update_recipe', user_id=user_id, recipe_id = recipe_id )}}"><button class="btn btn-primary"> Back </button> </a>
 
 
     <script src="/static/edit_images.js"></script>

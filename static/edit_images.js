@@ -1,9 +1,9 @@
 
 $(function(){
     
-    document.getElementById("add-image-np").addEventListener("click", addImage)
+    document.getElementById("add-image-edit-pg").addEventListener("click", addImage)
 
-    document.getElementById("minus-image-np").addEventListener("click", minusImage)
+    document.getElementById("minus-image-edit-pg").addEventListener("click", minusImage)
 
 })
 
@@ -13,10 +13,8 @@ function addImage() {
     NumOfSpan = document.getElementById('image-id').childElementCount
 
     NumImages = NumOfSpan + 1
-    console.log(NumImages)
-    document.getElementById("num-images-np").value = NumImages
+    document.getElementById("num-images-edit-pg").value = NumImages
     
-
     imageElement = document.createElement("span")
 
     imageElement.classList.add("uploader-button")
@@ -41,7 +39,7 @@ function minusImage() {
 
     if (NumOfSpan > 1) {
         document.getElementById("image-id").lastElementChild.remove()
-        document.getElementById("num-images-np").value = NumOfSpan - 1
+        document.getElementById("num-images-edit-pg").value = NumOfSpan - 1
     } else {
         alert(" An Image Upload button shown by default.")
     }
