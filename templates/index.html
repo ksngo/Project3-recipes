@@ -1,18 +1,39 @@
 {% extends 'template_layout.html'%}
 
+{%block head%}
+
+    <style>
+        #index-pg-nav {
+            display : flex;
+            list-style : none;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-around;
+
+        }
+
+    
+
+    </style>
+
+{%endblock%}
 
 {%block content%}
-
-<h1>index</h1>
-
-
-<ul>
-<li> <a href="{{url_for("recipes")}}")> Start Seeing Recipes </a> </li>
-<li> <a href="{{url_for("login")}}"> Login to My Account </a> </li>
-<li> <a href="{{url_for("create_account")}}"> Create New Account </a></li>
-</ul>
+<br>
 
 
+<div class="jumbotron">
+  <h1 class="display-4">Recipes </h1>
+  <p class="lead"> - my sweet memories and relishes and treasures</p>
+  <hr class="my-4">
+  <p>Keep and refer to your recipes 24/7 online. Your recipe can help anyone wanting to whip up a good meal. No recipe, no fret. Check out somebody's recipes and start cooking</p>
+    
+    <ul class="lead" id="index-pg-nav">
+        <li> <a href="{{url_for('recipes')}}" style="text-decoration: none;"> Uncover Treasures</a> </li>
+        <li> <a href="{{url_for('login')}}" style="text-decoration: none;"> Login to My Account </a> </li>
+        <li> <a href="{{url_for('create_account')}}" style="text-decoration: none;"> New Account </a></li>
+    </ul>
+</div>
 
 
 {%endblock%}

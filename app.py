@@ -457,6 +457,11 @@ def login_post() :
         
         user_id = get_user["_id"]
 
+        client[DB_NAME].users.update_one({
+            "_id" : ObjectId(user_id)
+        }, { "$set" : { "last_login" : datetime.datetime.now().strftime("%Y-%m-%d")}})
+
+
         return redirect(url_for("my_recipes", user_id=user_id))
 
 #----------------------------------review recipe page------------------------

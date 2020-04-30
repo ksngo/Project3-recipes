@@ -34,7 +34,7 @@ function addStep() {
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label"> Tools for step ${NumExistingSteps+1}  </label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="text" name="tools-${NumExistingSteps}" value="" />
+                        <input class="form-control" type="text" placeholder="insert if any tool" name="tools-${NumExistingSteps}" value="" />
                     </div>
                 </div>`
 

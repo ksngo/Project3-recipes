@@ -41,7 +41,7 @@ function addStep() {
                       NumExistingSteps + 1
                     }  </label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="text" name="tools-${NumExistingSteps}" value="" />
+                        <input class="form-control" type="text" placeholder="insert if any tool" name="tools-${NumExistingSteps}" value="" />
                     </div>
                 </div>`;
 
