@@ -214,10 +214,14 @@ def edit_images(user_id , recipe_id) :
                 "_id" : ObjectId(recipe_id)
                 },{ "photos" : 1})
 
+    get_recipe_name = client[DB_NAME].recipes.find_one({
+                "_id" : ObjectId(recipe_id)
+    }, { "recipe_name" : 1})
+
     user_id=user_id
     recipe_id=recipe_id
 
-    return render_template("edit_images.html", get_images = get_images, user_id=user_id, recipe_id=recipe_id, uploadcare_public_key=uploadcare_public_key)
+    return render_template("edit_images.html", get_images = get_images, user_id=user_id, recipe_id=recipe_id, uploadcare_public_key=uploadcare_public_key, get_recipe_name=get_recipe_name)
 
 ####-----------------------EDIT images post page------------------------------------
 @app.route('/<user_id>/my_recipes/<recipe_id>/edit_images', methods=["POST"])
