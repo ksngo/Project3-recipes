@@ -5,6 +5,7 @@
 <!-- from uploadcare start guide -->
 <script> UPLOADCARE_PUBLIC_KEY = "{{uploadcare_public_key}}"; </script>
 <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+<!-- end of from uploadcare start guide -->
 
 <style>
   .uploader-button .uploadcare--widget__button_type_open {
@@ -16,6 +17,7 @@
 <script>
 
     //--------------------------from uploadcare to limit file size--------------------------//
+    //------------------ https://uploadcare.com/docs/file_uploads/widget/v2/validation/------//
 
 function fileSizeLimit(min, max) {
   return function(fileInfo) {
@@ -77,8 +79,10 @@ widget.validators.push(fileSizeLimit(input.data('minSize'), input.data('maxSize'
       }
     }
   }
+  //--------------------------end of from uploadcare to limit file size--------------------------//
 
 </script>
+
 
 {%endblock%}
 
@@ -117,6 +121,7 @@ widget.validators.push(fileSizeLimit(input.data('minSize'), input.data('maxSize'
                         data-max-size="1048576"
                          />
                 </span>
+                <!-- end of  from uploadcare start guide -->
                
             </div>
                 

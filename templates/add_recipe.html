@@ -5,6 +5,7 @@
 <!-- from uploadcare start guide -->
 <script> UPLOADCARE_PUBLIC_KEY = "{{uploadcare_public_key}}"; </script>
 <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+<!-- end of from uploadcare start guide line -->
 
 <style>
   .uploader-button .uploadcare--widget__button_type_open {
@@ -13,8 +14,62 @@
   }
 </style>
 
+<!-- --------------------------from uploadcare to limit file size-------------------------->
+<!------------------ https://uploadcare.com/docs/file_uploads/widget/v2/validation/------ -->
 <script>
+
+function fileSizeLimit(min, max) {
+  return function(fileInfo) {
+    if (fileInfo.size === null) {
+      return
+    }
+    if (min && fileInfo.size < min) {
+      throw new Error('fileMinimalSize')
+    }
+    if (max && fileInfo.size > max) {
+      throw new Error('fileMaximumSize')
+    }
+  }
+}
+
+$(function() {
+  $('[role=uploadcare-uploader]').each(function() {
+    var input = $(this)
+
+    if (!input.data('minSize') && !input.data('maxSize')) {
+      return
+    }
+    var widget = uploadcare.Widget(input)
+
+    widget.validators.push(fileSizeLimit(input.data('minSize'), input.data('maxSize')))
+  })
+})
+
   UPLOADCARE_LOCALE_TRANSLATIONS = {
+    errors: {
+    fileMinimalSize: 'File is too small',
+    fileMaximumSize: 'File is too large',
+  },
+    
+    dialog: {
+    tabs: {
+      preview: {
+        error: {
+          fileMinimalSize: {
+            title: 'Title.',
+            text: 'Text.',
+            back: 'Back',
+          },
+          fileMaximumSize: {
+            title: 'Title.',
+            text: 'Text.',
+            back: 'Back',
+          },
+        },
+      },
+    },
+  },
+
     buttons: {
       choose: {
         files: {
@@ -23,7 +78,9 @@
       }
     }
   }
+
 </script>
+<!----------------------------end of from uploadcare to limit file size-------------------------->
 
 {%endblock%}
 
@@ -127,15 +184,17 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label"> Photos </label>
             <div class="col-sm-6" id="image-id">
-                <!-- from uploadcare start guide -->
+                <!-- from uploadcare start guide  -->
                 <span class="uploader-button">
+                    <code>max size per image is 1Mb</code><br/>
                     <input 
                         type="hidden"
                         role="uploadcare-uploader"
                         name="image-0"
-                        data-tabs="file camera facebook instagram dropbox gdrive" />
+                        data-tabs="file camera facebook instagram dropbox gdrive"
+                        data-max-size="1048576" />
                 </span>
-               
+               <!-- end of from uploadcare start guide  -->
             </div>
                 
         </div>

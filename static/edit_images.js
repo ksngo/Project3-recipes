@@ -32,7 +32,8 @@ function addImage() {
 
     document.getElementById("image-id").appendChild(imageElement)
 
-    // --------------------------upload care-----------------------------------//
+    // --------------------------from uploadcare to limit file size-----------------------------------//
+    //------------------ https://uploadcare.com/docs/file_uploads/widget/v2/validation/------//
     function fileSizeLimit(min, max) {
         return function(fileInfo) {
             if (fileInfo.size === null) {
@@ -52,13 +53,14 @@ function addImage() {
             var input = $(this)
 
             if (!input.data('minSize') && !input.data('maxSize')) {
-            return
-            }
+            return }
             var widget = uploadcare.Widget(input)
 
         widget.validators.push(fileSizeLimit(input.data('minSize'), input.data('maxSize')))
-  })
-})
+        })
+    })
+
+    // --------------------------end of from uploadcare to limit file size-----------------------------------//
 }
 
 function minusImage() {
