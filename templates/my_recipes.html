@@ -42,7 +42,7 @@
         {%for r in get_my_recipes %}
         <tr>
             <td> {{loop.index}} </td>
-            <td> {{r.recipe_name}} </td>
+            <td> <a href="{{url_for('recipe_display', recipe_id = r._id)}}" style="text-decoration:none;"  target="_blank"> {{r.recipe_name}} </a> </td>
             <td> {{r.cuisine}} </td>
             <td> {{r.my_rating}} </td>
             <td> {{r.date_posted}} </td>
