@@ -1,14 +1,20 @@
-console.log('success')
+
 $(function(){
 
+document.getElementById('password').addEventListener('keyup',checkPassword)
 document.getElementById('password-rekey').addEventListener('keyup',checkPassword)
 // document.getElementById('edit-account').addEventListener('click', editAccount)
+document.getElementById("user-name").addEventListener("keyup", readySubmitButton)
+document.getElementById("password").addEventListener("keyup", readySubmitButton)
+document.getElementById("password-rekey").addEventListener("keyup", readySubmitButton)
+document.getElementById("email").addEventListener("keyup", readySubmitButton)
+document.getElementById("country").addEventListener("keyup", readySubmitButton)
+
 })
 
 
 function checkPassword() {
 
-    console.log('hello i am in checkpassword function')
     password = document.getElementById('password').value
     passwordRekey = document.getElementById('password-rekey').value
     if (password == passwordRekey) {
@@ -37,3 +43,28 @@ function checkPassword() {
 //     document.getElementById("edit-account").style.cursor = "default"
 // }
 
+
+function readySubmitButton () {
+
+    console.log("in function")
+    document.getElementById("acc-submit").disabled = true
+    document.getElementById("acc-submit").style.cursor = "default"
+
+    if (document.getElementById("user-name").value != "" ) {
+        console.log(1)
+        if(document.getElementById("password").value != "") {
+            console.log(2)
+            if(document.getElementById("pw-span").innerHTML == "  Password matches") {
+                console.log(3)
+                if(document.getElementById("email").value != "" ) {
+                    console.log(4)
+                    if(document.getElementById("country").value != "") {
+
+                        document.getElementById("acc-submit").disabled = false
+                        document.getElementById("acc-submit").style.cursor = "pointer"
+                    } 
+                }
+            }
+        }
+    } 
+} 
