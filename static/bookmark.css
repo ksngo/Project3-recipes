@@ -1,9 +1,30 @@
 
-/* body {
-     
-} */
+
 
 #bookmark:hover {
 
     font-size:20px;
+}
+
+#bookmark-dialog {
+
+    position : fixed ;
+    top: 30%;
+    left: 50%;
+    transform : translate(-50%, -50%);
+    display: none;
+
+
+
+}
+
+form {
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    text-align: center;
+    justify-content: center;
+    margin: auto;
+    padding:20px;
+    width: auto;
+    background-color : white;
 }
