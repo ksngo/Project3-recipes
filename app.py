@@ -120,7 +120,7 @@ def bookmark_post(recipe_id):
 
         client[DB_NAME].users.update_one({
                 "_id": user_id
-            }, {"$push": {"favourites": ObjectId(recipe_id)}})
+            }, {"$push": {"favourites": [ObjectId(recipe_id) , request.form.get("recipe-name"), request.form.get("get-creator") ] }})
 
 
     return redirect(url_for("recipe_display", recipe_id = recipe_id))
@@ -178,7 +178,14 @@ def my_recipes(user_id):
         recipe_avg_rating=find_recipe_avg_rating(recipe_id)
         recipes_avg_ratings_list.append(recipe_avg_rating)
 
-    return render_template('my_recipes.html', get_my_recipes=get_my_recipes, recipes_avg_ratings_list=recipes_avg_ratings_list, user_id=user_id )
+    #####get bookmarks from users document#####
+    get_bookmarks = client[DB_NAME].users.find_one({
+        "_id" :  ObjectId(user_id)
+    },{ "favourites" : 1 })
+
+    print(get_bookmarks["favourites"])
+   
+    return render_template('my_recipes.html', get_my_recipes=get_my_recipes, recipes_avg_ratings_list=recipes_avg_ratings_list, user_id=user_id, get_bookmarks=get_bookmarks["favourites"] )
 
 # ------------------------------------EDIT recipe page----------------------------------------
 

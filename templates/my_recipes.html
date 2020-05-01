@@ -65,9 +65,24 @@
 
 
  </table>
- <a href="{{ url_for("add_recipe", user_id=user_id)}}" style="text-decoration:none;" > <i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> Add recipe </a>
 
-
+ <div class = "d-flex">
+    <div class = "p-2">
+        <a href="{{ url_for("add_recipe", user_id=user_id)}}" style="text-decoration:none;" > <i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> Add recipe </a>
+    </div>
+    <div class = "ml-auto p-2">
+        <div class="btn-group" role="group">
+            <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                My Favourites
+            </button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop1"">
+                {% for i in get_bookmarks %}
+                    <a class="dropdown-item " href="{{url_for('recipe_display', recipe_id = i[0])}}" target="_blank"  > {{i[1]}}- {{i[2]}} </a>
+                {%endfor%}
+            </div>
+        </div>
+    </div>
+ </div>
 
 {%endblock%}
 
