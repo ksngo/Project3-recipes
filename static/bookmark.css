@@ -1,6 +1,4 @@
 
-
-
 #bookmark:hover {
 
     font-size:20px;
@@ -13,8 +11,7 @@
     left: 50%;
     transform : translate(-50%, -50%);
     display: none;
-
-
+    z-index: 6;
 
 }
 
@@ -27,4 +24,9 @@ form {
     padding:20px;
     width: auto;
     background-color : white;
+}
+
+.inactiveLink {
+    pointer-events : none;
+    cursor: default;
 }

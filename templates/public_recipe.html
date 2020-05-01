@@ -34,6 +34,8 @@
 
 {% block content %}
 
+
+
 <h2>{{get_recipe.recipe_name}} </h2>
 
 <!-- {% for i in get_recipe.steps %}
@@ -41,7 +43,7 @@
 {%endfor%} -->
 
 
-<button type="button" class="btn btn-primary">
+<button type="button" class="btn btn-primary" id="button-ratings">
   <a href="{{url_for('reviews', recipe_id = get_recipe._id )}}"  style="text-decoration:none; color:white;">
    Ratings / Reviews <span class="badge badge-light">{{avg_likes}} / {{get_recipe.num_reviews}}</span></a>
 </button>
@@ -123,6 +125,9 @@
     <div id="bookmark-dialog-inner" >
 
         <form method="POST">
+            <button type="button" class="close" id="close-dialog">
+                <span>&times;</span>
+            </button>
             <div class="form-group">
                 <label for="email" class="sr-only">Email</label>
                 <input type="email" class="form-control-plaintext" id="email" name="email" placeholder="email@example.com">
@@ -140,4 +145,5 @@
 
 </div>
 
+<script src="/static/bookmark.js"></script>
 {%endblock%}
