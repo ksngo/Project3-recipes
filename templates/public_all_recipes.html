@@ -49,13 +49,18 @@
             <th>From</th>
             <th>Country</th>
             <th>
+                <a href="{{url_for('sort_self_rating_a')}}" style="text-decoration:none;"><sup><i class="fa fa-sort-asc text-dark" aria-hidden="true"></i></sup></a>
+                Self-rating
+                <a href="{{url_for('sort_self_rating_d')}}" style="text-decoration:none;"><sub><i class="fa fa-sort-desc text-dark" aria-hidden="true"></i></sub></a>
+            </th>
+            <th>
                 <a href="{{url_for('sort_date_a')}}" style="text-decoration:none;"><sup><i class="fa fa-sort-asc text-dark" aria-hidden="true"></i></sup></a>
                 Date Posted
                 <a href="{{url_for('sort_date_d')}}" style="text-decoration:none;"><sub><i class="fa fa-sort-desc text-dark" aria-hidden="true"></i></sub></a>
             </th>
             <th>
                 <a href="{{url_for('sort_ratings_a')}}" style="text-decoration:none;"><sup><i class="fa fa-sort-asc text-dark" aria-hidden="true"></i></sup></a>
-                Ratings
+                 Ratings
                 <a href="{{url_for('sort_ratings_d')}}" style="text-decoration:none;"><sub><i class="fa fa-sort-desc text-dark" aria-hidden="true"></i></sub></a>
             </th>
             <th> 
@@ -77,6 +82,7 @@
                     <td> {{i.country}}</td>
                 {%endif%}
             {%endfor%}
+            <td style="text-align:center;"> {{r.my_rating}} </td>
 
             <td> {{r.date_posted}} </td>
             
@@ -92,7 +98,7 @@
                 <td> {{r.avg_likes}} </td>
             {%endif%}
 
-            <td> {{r.num_reviews}}</td>
+            <td> <a href="{{url_for('reviews', recipe_id = r._id)}}">  {{r.num_reviews}} </a></td>
         </tr>
         {%endfor%}
 

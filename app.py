@@ -35,19 +35,6 @@ def recipes():
     get_recipes = client[DB_NAME].recipes.find()
     get_users = list(client[DB_NAME].users.find())
 
-    # get_avg_likes = list(client[DB_NAME].recipes.aggregate(
-    #     [ { "$unwind" : "$likes"},
-    #         {
-    #          "$group":
-    #             {
-    #                 "_id" : "$_id",
-    #                 "avglikes": {"$avg":  "$likes.ratings" }
-    #             }
-    #         },
-    #         { "$project": { "trunclikes" : { "$trunc": [ "$avglikes", 2 ] } } }
-    #     ]
-    # ))
-
     return render_template('public_all_recipes.html', get_recipes=get_recipes, get_users=get_users)
 
 # -------------------------------Public each recipe page------------------------------------
@@ -59,7 +46,7 @@ def recipe_display(recipe_id):
     #####get object type recipe document base on given recipe_id#####
     get_recipe = client[DB_NAME].recipes.find_one({'_id': ObjectId(recipe_id)})
 
-    #####prepare a lists from 0 to variable wher variable is number of steps in recipe#######
+    #####prepare a lists from 0 to variable where variable is number of steps in recipe#######
     recipe_steps_num_list = list(range(0, len(get_recipe['steps'])))
 
     #####get object type user document base on the recipe's user_id######
@@ -253,7 +240,7 @@ def update_recipe(user_id, recipe_id):
             "ingredients" : ing_list,
             "tools" : tools_list,
             "cuisine" : string.capwords(request.form.get("cuisine")),
-            "my_rating" : request.form.get("my-rating"),
+            "my_rating" : int(request.form.get("my-rating")),
             "number_steps" : request.form.get( "num-steps"),
             "date_last_edited" : datetime.datetime.now().strftime("%Y-%m-%d")
         }
@@ -420,13 +407,13 @@ def add_recipe_post(user_id) :
         "tools" : tools_list,
         "cuisine" : string.capwords(request.form.get("cuisine")),
         "photos" : images_list,
-        "my_rating" : request.form.get("my-rating"),
+        "my_rating" : int(request.form.get("my-rating")),
         "likes" : likes_list,
         "user_id" : user_id,
         "date_posted" : datetime.datetime.now().strftime("%Y-%m-%d"),
         "date_last_edited": "null",
         "number_steps" : request.form.get("num-steps-np"),
-        "avg_likes" : "0" ,
+        "avg_likes" : 0 ,
         "num_reviews" : 0 
 
     })
@@ -436,7 +423,7 @@ def add_recipe_post(user_id) :
                     "user_id" : user_id ,
                     "recipe_name" : string.capwords(request.form.get("recipe-name")),
                     "number_steps" : request.form.get("num-steps-np"),
-                    "my_rating" : request.form.get("my-rating"),
+                    "my_rating" : int(request.form.get("my-rating")),
                     "steps" : steps_list,
                     "ingredients" : ing_list,
                     "tools" : tools_list,
@@ -544,25 +531,27 @@ def reviews(recipe_id) :
 @app.route("/recipes/<recipe_id>/reviews", methods=["POST"])
 def reviews_post(recipe_id) :
 
-
-
-
-
     get_valid_user = client[DB_NAME].users.find_one({ 
         "user_name" : request.form.get("username"),
         "password" : request.form.get("password")
     })
 
-    print(get_valid_user)
+    get_ratings = request.form.get("ratings")
+  
     
     if get_valid_user == None :
         flash ("Sorry, no valid user with password found. Please try again.")
-        print("------------------none-------------------")
+        
+        return redirect(url_for("reviews_post", recipe_id = recipe_id))
+
+    elif get_ratings == "Choose..." :
+
+        flash("Please insert ratings. ") 
 
         return redirect(url_for("reviews_post", recipe_id = recipe_id))
-    else :
 
-        print("--------valid use-----------------")
+    else:
+
         client[DB_NAME].recipes.update_one({
             "_id" : ObjectId(recipe_id)
         }, {
@@ -580,13 +569,11 @@ def reviews_post(recipe_id) :
         get_recipe = client[DB_NAME].recipes.find_one({ "_id" : ObjectId(recipe_id) })
 
         num_reviews = get_recipe["num_reviews"] + 1
-        avg_likes = str(
-            round(
+        avg_likes = round(
                 (float(get_recipe["avg_likes"])*(int(num_reviews)-1) + int(request.form.get("ratings")))/int(num_reviews)
                 ,2)
             
-            )
-        
+
         client[DB_NAME].recipes.update_one({
             "_id" : ObjectId(recipe_id)
         }, {
@@ -690,6 +677,24 @@ def sort_reviews_a() :
     get_users = list(client[DB_NAME].users.find())
 
     return render_template("public_all_recipes.html", get_recipes = get_recipes , get_users=get_users)
+
+# --------------------------Sort by self rating descending-----------------------------
+@app.route("/recipes/sort_self_rating_d")
+def sort_self_rating_d() :
+
+    get_recipes = client[DB_NAME].recipes.find().sort( "my_rating" , -1)
+    get_users = list(client[DB_NAME].users.find())
+
+    return render_template("public_all_recipes.html", get_recipes = get_recipes , get_users=get_users)
+
+# --------------------------Sort by self rating ascending-----------------------------
+@app.route("/recipes/sort_self_rating_a")
+def sort_self_rating_a() :
+
+    get_recipes = client[DB_NAME].recipes.find().sort( "my_rating" , 1)
+    get_users = list(client[DB_NAME].users.find())
+
+    return render_template("public_all_recipes.html", get_recipes = get_recipes , get_users=get_users)
    
 # --------------------------functions------------------------
 
@@ -711,7 +716,7 @@ def find_recipe_avg_rating (recipe_id) :
         for x in range(number_of_ratings):
             rating_sum = rating_sum + int(get_my_recipe['likes'][x]['ratings'])
     
-        recipe_avg_rating = str(round(float(rating_sum / number_of_ratings),2))
+        recipe_avg_rating = round(float(rating_sum / number_of_ratings),2)
     else:
 
         recipe_avg_rating ="null"

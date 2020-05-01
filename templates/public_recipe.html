@@ -104,17 +104,19 @@
         <td> other recipes from contributor </td>
         <td> 
         {%for r in recipes_id_list_names%}
-        <a href='{{url_for('recipe_display' , recipe_id = get_creator.my_recipes[loop.index0])}}' > {{r}} </a>
+        <a href='{{url_for('recipe_display' , recipe_id = get_creator.my_recipes[loop.index0])}}' > {{r}} </a> &nbsp;
         {%endfor%}
         </td>
     </tr>
 </table> </br>
 
-<div class="card-columns">
+<div class="row row-cols-1 row-cols-md-2">
   
      {% for i in get_recipe.photos %}
+     <div class="col mb-4">
         <div class="card">
             <img src="{{i}}" class="card-img-top" alt="image {{loop.index0}}">
+        </div>
         </div>
     {%endfor%}
   
