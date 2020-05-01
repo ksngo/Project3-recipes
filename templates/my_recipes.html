@@ -76,9 +76,13 @@
                 My Favourites
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop1"">
-                {% for i in get_bookmarks %}
-                    <a class="dropdown-item " href="{{url_for('recipe_display', recipe_id = i[0])}}" target="_blank"  > {{i[1]}}- {{i[2]}} </a>
-                {%endfor%}
+                {% if get_bookmarks_lists|length == 0 %}
+                      empty
+                {%else%}
+                    {% for each_list in get_bookmarks_lists %}
+                        <a class="dropdown-item text-secondary" href="{{url_for('recipe_display', recipe_id = each_list[0])}}" target="_blank"  > {{each_list[1]}}- {{each_list[2]}} </a>
+                    {%endfor%}
+                {%endif%}
             </div>
         </div>
     </div>

@@ -109,20 +109,32 @@ def bookmark_post(recipe_id):
     get_user = client[DB_NAME].users.find_one({
                     "email": request.form.get("email"),
                     "password": request.form.get("password")
-                    })
-
-    user_id = get_user["_id"]
-
+                })
+    
+    #####check recipe_id not already in user favourites#####
+    existing_bookmark=False
+    
+    if get_user is not None:
+        user_id = get_user["_id"]
+        for i in get_user["favourites"] :
+            print (i)
+            print (i[0])
+            print (ObjectId(recipe_id))
+            if i[0] == ObjectId(recipe_id) :
+                existing_bookmark = True
+            
     if get_user is None:
         flash("No matching email and password record.")
+    elif existing_bookmark:
+        flash("Already bookmarked.")
     else:
-        flash("Added to your bookmark.")
-
+        
         client[DB_NAME].users.update_one({
                 "_id": user_id
             }, {"$push": {"favourites": [ObjectId(recipe_id) , request.form.get("recipe-name"), request.form.get("get-creator") ] }})
 
-
+        flash("Added to your bookmark.")
+    
     return redirect(url_for("recipe_display", recipe_id = recipe_id))
 
 
@@ -183,9 +195,8 @@ def my_recipes(user_id):
         "_id" :  ObjectId(user_id)
     },{ "favourites" : 1 })
 
-    print(get_bookmarks["favourites"])
-   
-    return render_template('my_recipes.html', get_my_recipes=get_my_recipes, recipes_avg_ratings_list=recipes_avg_ratings_list, user_id=user_id, get_bookmarks=get_bookmarks["favourites"] )
+
+    return render_template('my_recipes.html', get_my_recipes=get_my_recipes, recipes_avg_ratings_list=recipes_avg_ratings_list, user_id=user_id, get_bookmarks_lists=get_bookmarks["favourites"] )
 
 # ------------------------------------EDIT recipe page----------------------------------------
 
