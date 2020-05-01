@@ -79,9 +79,12 @@
                 {% if get_bookmarks_lists|length == 0 %}
                       empty
                 {%else%}
+
                     {% for each_list in get_bookmarks_lists %}
                         <a class="dropdown-item text-secondary" href="{{url_for('recipe_display', recipe_id = each_list[0])}}" target="_blank"  > {{each_list[1]}}- {{each_list[2]}} </a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{{url_for('remove_bookmark', user_id= user_id, recipe_id = each_list[0]) }}" style="text-decoration:none;" > <i class="fa fa-trash" aria-hidden="true"> remove</i></a>
                     {%endfor%}
+                    
                 {%endif%}
             </div>
         </div>

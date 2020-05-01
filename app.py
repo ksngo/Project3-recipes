@@ -198,6 +198,19 @@ def my_recipes(user_id):
 
     return render_template('my_recipes.html', get_my_recipes=get_my_recipes, recipes_avg_ratings_list=recipes_avg_ratings_list, user_id=user_id, get_bookmarks_lists=get_bookmarks["favourites"] )
 
+
+##---------------------------remove bookmarks from my recipes page --------------------------
+
+@app.route("/<user_id>/my_recipes/remove_bookmark/<recipe_id>")
+def remove_bookmark(user_id, recipe_id) :
+
+    client[DB_NAME].users.update ({
+        "_id" : ObjectId(user_id)
+    },{ "$pull" : { "favourites" : { "$in" : [ObjectId(recipe_id)]}}})
+
+    return redirect(url_for ("my_recipes", user_id = user_id))
+
+
 # ------------------------------------EDIT recipe page----------------------------------------
 
 @app.route('/<user_id>/my_recipes/<recipe_id>/edit')
@@ -214,7 +227,7 @@ def edit_recipe(user_id, recipe_id):
 
     return render_template("edit_recipe.html", get_recipe=get_recipe, recipe_steps_num_list=recipe_steps_num_list, user_id=user_id, recipe_id=recipe_id )
 
-# ----------------------------------EDIT recipe Post page-----------------------------------
+## ----------------------------------EDIT recipe Post page-----------------------------------
 
 @app.route('/<user_id>/my_recipes/<recipe_id>/edit', methods=['POST'])
 def update_recipe(user_id, recipe_id):
