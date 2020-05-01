@@ -86,6 +86,7 @@ widget.validators.push(fileSizeLimit(input.data('minSize'), input.data('maxSize'
 
 <title>Edit photos - Recipesuccess</title>
 
+
 {%endblock%}
     
     
@@ -114,8 +115,16 @@ widget.validators.push(fileSizeLimit(input.data('minSize'), input.data('maxSize'
 
     <form method="POST">
 
-        <h2> Remove photos </h2>
-        <small>Check image and submit to remove.</small>
+        
+        <div class="d-flex">
+        <div class="p-2">
+            <h2> Remove photos </h2>
+            <small>Check image and submit to remove.</small>
+        </div>
+        <div class="ml-auto p-2" style="cursor:default;">
+              <i class="fa fa-user-circle" aria-hidden="true"></i> {{user_name}}
+        </div>
+    </div>
         <!-- This is hidden; to return number of images to method post -->
         <input type="text" id="num-images-edit-pg" name="num-images-edit-pg" style="visibility: hidden;" value="1"/> 
 

@@ -182,8 +182,14 @@ def my_recipes(user_id):
         "_id" :  ObjectId(user_id)
     },{ "favourites" : 1 })
 
+    #####get user name for show login name#####
+    get_user_name = client[DB_NAME].users.find_one({
+        "_id" : ObjectId(user_id)
+    }, {"user_name" : 1})
 
-    return render_template('my_recipes.html', get_my_recipes=get_my_recipes, recipes_avg_ratings_list=recipes_avg_ratings_list, user_id=user_id, get_bookmarks_lists=get_bookmarks["favourites"] )
+    user_name = get_user_name["user_name"]
+
+    return render_template('my_recipes.html', get_my_recipes=get_my_recipes, recipes_avg_ratings_list=recipes_avg_ratings_list, user_id=user_id, get_bookmarks_lists=get_bookmarks["favourites"], user_name=user_name )
 
 
 ##---------------------------remove bookmarks from my recipes page --------------------------
@@ -211,8 +217,15 @@ def edit_recipe(user_id, recipe_id):
     user_id=user_id
     recipe_id=recipe_id
 
+    #####get user name for show login name#####
+    get_user_name = client[DB_NAME].users.find_one({
+        "_id" : ObjectId(user_id)
+    }, {"user_name" : 1})
 
-    return render_template("edit_recipe.html", get_recipe=get_recipe, recipe_steps_num_list=recipe_steps_num_list, user_id=user_id, recipe_id=recipe_id )
+    user_name = get_user_name["user_name"]
+
+
+    return render_template("edit_recipe.html", get_recipe=get_recipe, recipe_steps_num_list=recipe_steps_num_list, user_id=user_id, recipe_id=recipe_id ,user_name=user_name)
 
 ## ----------------------------------EDIT recipe Post page-----------------------------------
 
@@ -266,7 +279,14 @@ def edit_images(user_id , recipe_id) :
     user_id=user_id
     recipe_id=recipe_id
 
-    return render_template("edit_images.html", get_images = get_images, user_id=user_id, recipe_id=recipe_id, uploadcare_public_key=uploadcare_public_key, get_recipe_name=get_recipe_name)
+    #####get user name for show login name#####
+    get_user_name = client[DB_NAME].users.find_one({
+        "_id" : ObjectId(user_id)
+    }, {"user_name" : 1})
+
+    user_name = get_user_name["user_name"]
+
+    return render_template("edit_images.html", get_images = get_images, user_id=user_id, recipe_id=recipe_id, uploadcare_public_key=uploadcare_public_key, get_recipe_name=get_recipe_name, user_name=user_name)
 
 # -----------------------EDIT images post page------------------------------------
 @app.route('/<user_id>/my_recipes/<recipe_id>/edit_images', methods=["POST"])
@@ -368,8 +388,15 @@ def add_recipe(user_id) :
     ##### pass uploadcare key from .env to html template #####
     uploadcare_public_key=os.environ.get("UPLOADCARE_PUBLIC_KEY")
     user_id=user_id
+    
+    #####get user name for show login name#####
+    get_user_name = client[DB_NAME].users.find_one({
+        "_id" : ObjectId(user_id)
+    }, {"user_name" : 1})
 
-    return render_template("add_recipe.html", user_id=user_id, uploadcare_public_key=uploadcare_public_key)
+    user_name = get_user_name["user_name"]
+
+    return render_template("add_recipe.html", user_id=user_id, uploadcare_public_key=uploadcare_public_key,  user_name=user_name)
 
 # -------------------------------ADD recipe page post----------------------------------
 

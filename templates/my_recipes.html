@@ -29,7 +29,14 @@
 
 {%block content%}
 
- <h1> My Recipes </h1>
+    <div class="d-flex">
+        <div class="p-2">
+            <h1> My Recipes </h1>
+        </div>
+        <div class="ml-auto p-2" style="cursor:default;">
+           <i class="fa fa-user-circle" aria-hidden="true"></i> {{user_name}}
+        </div>
+    </div>
 
  <table class='table table-bordered'>
 
