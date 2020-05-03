@@ -55,3 +55,18 @@
 #redo a:hover {
     color: rgb(0,128,255);
 }
+
+body {
+  background-image: linear-gradient(to top, rgba(255,255,255,0),rgba(255,255,255,1)),url(/static/images/cook.jpg);
+  /* background-image: url(/static/images/baking-ingredients.png); */
+  background-size: cover;
+  background-color: white;
+  /* background-position: center; */
+  background-repeat: no-repeat;
+  height: 100vh;
+  
+}
+
+table {
+    background-color:white;
+}

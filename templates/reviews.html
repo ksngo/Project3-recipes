@@ -5,6 +5,20 @@
 
 <title>Reviews - Recipesuccess </title>
 
+<style>
+
+	body {
+        background-image: linear-gradient(to top, rgba(255,255,255,0),rgba(255,255,255,1)),url(/static/images/avocado.jpg);
+        background-size: cover;
+        background-color: white;
+        /* background-position: center; */
+        background-repeat: no-repeat;
+        height: 100vh;
+	
+	}
+	
+</style>
+
 {%endblock%}
 
 {%block nav%}
@@ -112,11 +126,12 @@
       
     </div>
   </div>
-    <small id="passwordHelpBlock" class="form-text text-muted">
+    
+
+    <input type="submit" value="Submit" class="btn btn-primary" >
+    <small id="passwordHelpBlock" class="form-text text-dark">
     Only account user may post review.
     </small>
-
-    <input type="submit" value="Submit">
 
 </form>
 
