@@ -33,13 +33,10 @@
 
 <div class="d-flex align-items-center" >
     <div class="p-2" >
-        <h1> Recipes </h1>
+        <h1>Recipes</h1>
     </div>
     <div class="p-2 ml-auto ">
-        <form method="POST"  action="{{url_for('recipes_search')}}" class="d-flex justify-content-start ">
-            <input type="text" class="form-control border-right-0" id="user_query" name="user_query" placeholder="Recipe/Cuisine" style="border-radius: 5px 0 0 5px;">
-            <button class="input-group-text bg-primary text-white" type="submit" style="border-radius:  0 5px 5px 0;"><i class="fa fa-search"></i></button>
-        </form>
+        <div id="redo"><a href="{{url_for('recipes')}}" style="text-decoration:none; "> <i class="fa fa-undo" aria-hidden="true"></i> </a> </div>
     </div>
 </div>
 
@@ -48,36 +45,24 @@
         <tr>
             <th>Index</th>
             <th>
-                <a href="{{url_for('sort_recipe_a')}}" style="text-decoration:none;"><sup><i class="fa fa-sort-asc text-dark" aria-hidden="true"></i></sup></a>
                 Recipe Name
-                <a href="{{url_for('sort_recipe_d')}}" style="text-decoration:none;"><sub><i class="fa fa-sort-desc text-dark" aria-hidden="true"></i></sub></a>
             </th>
             <th class="col-hide-430">
-                <a  href="{{url_for('sort_cuisine_a')}}" style="text-decoration:none;"><sup><i class="fa fa-sort-asc text-dark" aria-hidden="true"></i></sup></a>
                 Cuisine
-                <a href="{{url_for('sort_cuisine_d')}}" style="text-decoration:none;"><sub><i class="fa fa-sort-desc text-dark" aria-hidden="true"></i></sub></a>
             </th>
             <th class="col-hide">From</th>
             <th class="col-hide">Country</th>
             <th class="col-hide">
-                <a href="{{url_for('sort_self_rating_a')}}" style="text-decoration:none;"><sup><i class="fa fa-sort-asc text-dark" aria-hidden="true"></i></sup></a>
                 Self-rating
-                <a href="{{url_for('sort_self_rating_d')}}" style="text-decoration:none;"><sub><i class="fa fa-sort-desc text-dark" aria-hidden="true"></i></sub></a>
             </th>
             <th class="col-hide">
-                <a href="{{url_for('sort_date_a')}}" style="text-decoration:none;"><sup><i class="fa fa-sort-asc text-dark" aria-hidden="true"></i></sup></a>
                 Date Posted
-                <a href="{{url_for('sort_date_d')}}" style="text-decoration:none;"><sub><i class="fa fa-sort-desc text-dark" aria-hidden="true"></i></sub></a>
             </th>
             <th>
-                <a href="{{url_for('sort_ratings_a')}}" style="text-decoration:none;"><sup><i class="fa fa-sort-asc text-dark" aria-hidden="true"></i></sup></a>
                  Ratings
-                <a href="{{url_for('sort_ratings_d')}}" style="text-decoration:none;"><sub><i class="fa fa-sort-desc text-dark" aria-hidden="true"></i></sub></a>
             </th>
             <th> 
-                <a href="{{url_for('sort_reviews_a')}}" style="text-decoration:none;"><sup><i class="fa fa-sort-asc text-dark" aria-hidden="true"></i></sup></a>
                 Reviews 
-                <a href="{{url_for('sort_reviews_d')}}" style="text-decoration:none;"><sub><i class="fa fa-sort-desc text-dark" aria-hidden="true"></i></sub></a>
             </th>
         </tr>
     </thead>
