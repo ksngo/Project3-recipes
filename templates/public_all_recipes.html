@@ -4,6 +4,7 @@
 {%block head%}
 
 <title> Recipes - Recipesuccess</title>
+<link rel="stylesheet" href="/static/public_all_recipes.css" />
 
 {%endblock%}
 
@@ -30,7 +31,21 @@
 
 {%block content%}
 
-<h1> Recipes </h1>
+<div class="d-flex" >
+    <div class="p-2" >
+        <h1> Recipes </h1>
+    </div>
+    <div class="p-2 ml-auto">
+
+        <div class="input-group">
+            <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Search">
+            <div class="input-group-prepend">
+                <div class="input-group-text bg-primary"><a href="#" style="color:white; text-decoration:none;"><i class="fa fa-search"></i></a></div>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 <table class='table table-bordered'>
     <thead class='thead-light'>
@@ -41,19 +56,19 @@
                 Recipe Name
                 <a href="{{url_for('sort_recipe_d')}}" style="text-decoration:none;"><sub><i class="fa fa-sort-desc text-dark" aria-hidden="true"></i></sub></a>
             </th>
-            <th>
-                <a href="{{url_for('sort_cuisine_a')}}" style="text-decoration:none;"><sup><i class="fa fa-sort-asc text-dark" aria-hidden="true"></i></sup></a>
+            <th class="col-hide-430">
+                <a  href="{{url_for('sort_cuisine_a')}}" style="text-decoration:none;"><sup><i class="fa fa-sort-asc text-dark" aria-hidden="true"></i></sup></a>
                 Cuisine
                 <a href="{{url_for('sort_cuisine_d')}}" style="text-decoration:none;"><sub><i class="fa fa-sort-desc text-dark" aria-hidden="true"></i></sub></a>
             </th>
-            <th>From</th>
-            <th>Country</th>
-            <th>
+            <th class="col-hide">From</th>
+            <th class="col-hide">Country</th>
+            <th class="col-hide">
                 <a href="{{url_for('sort_self_rating_a')}}" style="text-decoration:none;"><sup><i class="fa fa-sort-asc text-dark" aria-hidden="true"></i></sup></a>
                 Self-rating
                 <a href="{{url_for('sort_self_rating_d')}}" style="text-decoration:none;"><sub><i class="fa fa-sort-desc text-dark" aria-hidden="true"></i></sub></a>
             </th>
-            <th>
+            <th class="col-hide">
                 <a href="{{url_for('sort_date_a')}}" style="text-decoration:none;"><sup><i class="fa fa-sort-asc text-dark" aria-hidden="true"></i></sup></a>
                 Date Posted
                 <a href="{{url_for('sort_date_d')}}" style="text-decoration:none;"><sub><i class="fa fa-sort-desc text-dark" aria-hidden="true"></i></sub></a>
@@ -75,16 +90,16 @@
         <tr>
             <td>{{loop.index}}</td>
             <td> <a href= '{{url_for('recipe_display' , recipe_id=r._id)}}'>{{r.recipe_name}}</a> </td>
-            <td> {{r.cuisine}}</td>
+            <td class="col-hide-430"> {{r.cuisine}}</td>
             {%for i in get_users %}
                 {%if i._id|string() == r.user_id|string() %}
-                    <td> {{i.user_name}} </td>
-                    <td> {{i.country}}</td>
+                    <td class="col-hide"> {{i.user_name}} </td>
+                    <td class="col-hide"> {{i.country}}</td>
                 {%endif%}
             {%endfor%}
-            <td style="text-align:center;"> {{r.my_rating}} </td>
+            <td class="col-hide" style="text-align:center;"> {{r.my_rating}} </td>
 
-            <td> {{r.date_posted}} </td>
+            <td class="col-hide"> {{r.date_posted}} </td>
             
             <!-- {%for i in get_avg_likes %}
                 {%if i._id == r._id %}
