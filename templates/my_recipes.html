@@ -3,6 +3,7 @@
 {%block head%}
 
 <title>My recipes - Recipesuccess </title>
+<link rel="stylesheet" href="/static/my_recipes.css" />
 
 {%endblock%}
 
@@ -44,11 +45,11 @@
         <tr>
             <th> Index </th>
             <th> Recipe Name </th>
-            <th> Cuisine </th>
-            <th> My Rating </th>
-            <th> date posted </th>
+            <th class="col-hide"> Cuisine </th>
+            <th class="col-hide"> My Rating </th>
+            <th class="col-hide"> date posted </th>
             <th> date last edited </th>
-            <th> public rating </th>
+            <th class="col-hide-374"> public rating </th>
             <th> </th>
         </tr>
     </thead>
@@ -56,11 +57,11 @@
         <tr>
             <td> {{loop.index}} </td>
             <td> <a href="{{url_for('recipe_display', recipe_id = r._id)}}" style="text-decoration:none;"  target="_blank"> {{r.recipe_name}} </a> </td>
-            <td> {{r.cuisine}} </td>
-            <td> {{r.my_rating}} </td>
-            <td> {{r.date_posted}} </td>
+            <td class="col-hide"> {{r.cuisine}} </td>
+            <td class="col-hide"> {{r.my_rating}} </td>
+            <td class="col-hide"> {{r.date_posted}} </td>
             <td> {{r.date_last_edited}} </td>
-            <td> {{recipes_avg_ratings_list[loop.index0]}} </td>
+            <td class="col-hide-374"> {{recipes_avg_ratings_list[loop.index0]}} </td>
             <td> <a href='{{ url_for("edit_recipe", user_id=r.user_id, recipe_id=r._id)}}'> Edit </a> <br>
                 <a href='{{url_for("delete_recipe_page", user_id=r.user_id, recipe_id=r._id)}}'>Delete</a> 
             </td>
