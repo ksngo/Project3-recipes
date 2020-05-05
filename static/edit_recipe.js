@@ -17,24 +17,25 @@ function addStep() {
 
     let stepElement = document.createElement('div')
 
-    // stepElement.setAttribute("class","form-group row")
+    stepElement.setAttribute("id","steps-block")
     stepElement.innerHTML = `
+            
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label"> <b>STEP ${NumExistingSteps+1}</b> </label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="text" name="step-${NumExistingSteps}" value="" />
+                        <textarea class="form-control" type="text" name="step-${NumExistingSteps}" value="" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label"> Ingredients for Step ${NumExistingSteps+1} </label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="text" name="ing-${NumExistingSteps}" value="" />
+                        <textarea class="form-control" type="text" name="ing-${NumExistingSteps}" value="" rows="2"></textarea>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label"> Tools for step ${NumExistingSteps+1}  </label>
+                    <label class="col-sm-2 col-form-label"> Tools/Tips for step ${NumExistingSteps+1}  </label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="text" placeholder="insert if any tool" name="tools-${NumExistingSteps}" value="" />
+                        <textarea class="form-control" type="text" name="tools-${NumExistingSteps}" value="" rows="2"></textarea>
                     </div>
                 </div>`
 
