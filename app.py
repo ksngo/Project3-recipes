@@ -66,6 +66,36 @@ def recipes_search_results( user_query) :
 
     return render_template("search_recipes.html", get_recipes=get_recipes, get_users=get_users)
 
+####-------------------------Public recipes page Frames view------------------------------------
+
+@app.route("/recipes/frames")
+def recipes_frames () :
+    get_recipes = client[DB_NAME].recipes.find()
+    get_users = list(client[DB_NAME].users.find())
+
+    return render_template('public_all_recipes_frames.html', get_recipes=get_recipes, get_users=get_users)
+
+#####-----------------------Public recipes page Frames view POST (search)------------------------
+
+@app.route('/recipes/frames/search/', methods=["POST"])
+def recipes_frames_search() :
+
+    user_query = request.form.get("user_query")
+    get_recipes = client[DB_NAME].recipes.find( {"$text" : { "$search" : user_query}})
+    
+    if user_query =="" :
+        return redirect( url_for("recipes_frames"))
+    elif list(get_recipes) :
+        flash("Search results for "+'"'+user_query+'"')
+    else :
+        flash("No results for "+'"'+user_query+'"')
+        return redirect( url_for("recipes_frames"))
+    
+    get_recipes = client[DB_NAME].recipes.find( {"$text" : { "$search" : user_query}})
+    get_users = list(client[DB_NAME].users.find())
+
+    return render_template('public_all_recipes_frames.html', get_recipes=get_recipes, get_users=get_users)
+
 # -------------------------------Public each recipe page------------------------------------
 
 

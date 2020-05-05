@@ -1,0 +1,92 @@
+
+@media only screen and (max-width: 760px) {
+
+.col-hide {
+    display: none;
+    
+
+}
+
+}
+
+
+@media only screen and (max-width: 430px) {
+
+.col-hide-430 {
+    display: none;
+    
+}
+
+
+
+}
+
+::placeholder {
+    font-size: small;
+}
+
+#redo {
+
+    width :30px;
+    height:30px;
+    border-radius:50%;
+    padding:2px;
+    text-align: center;
+
+}
+
+
+#redo:hover {
+
+    
+    width :30px;
+    height:30px;
+    background-color:rgba(211, 211, 211, .5);
+    border-radius:50%;
+    padding:2px;
+    text-align: center;
+
+}
+
+#redo a {
+    color:black;
+}
+
+#redo a:hover {
+    color: rgb(0,128,255);
+}
+
+body {
+  background-image: linear-gradient(to top, rgba(255,255,255,0),rgba(255,255,255,1)),url(/static/images/cook.jpg);
+  /* background-image: url(/static/images/baking-ingredients.png); */
+  background-size: cover;
+  background-color: white;
+  /* background-position: center; */
+  background-repeat: no-repeat;
+  height: 100vh;
+  
+}
+
+table {
+    background-color:white;
+}
+
+.btn:hover {
+    cursor: default;
+    background-color: rgb(0,128,255);
+    border-color: rgb(0,128,255);
+}
+
+.recipe-link {
+    
+    color:white;
+}
+
+.recipe-link:hover {
+    text-decoration:none;
+    color:white;
+}
+
+.bg-secondary:hover {
+    background-color: rgb(99, 103, 107) !important;
+}

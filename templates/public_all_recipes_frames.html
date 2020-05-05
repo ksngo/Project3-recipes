@@ -4,7 +4,7 @@
 {%block head%}
 
 <title> Recipes - Recipesuccess</title>
-<link rel="stylesheet" href="/static/css/public_all_recipes.css" />
+<link rel="stylesheet" href="/static/css/public_all_recipes_frames.css" />
 
 {%endblock%}
 
@@ -34,20 +34,39 @@
 <div class="d-flex align-items-center" >
     <div class="p-2" >
         <h1> Recipes 
-            &nbsp;&nbsp;<a href="{{url_for('recipes_frames')}}"><i class="fa fa-picture-o" aria-hidden="true" style="font-size:22px;"></i> </a> 
+            &nbsp;&nbsp;<a href="{{url_for('recipes')}}"><i class="fa fa-table fa-lg" aria-hidden="true" style="font-size:22px;"></i></a>
         </h1>
-        
     </div>
     <div class="p-2 ml-auto ">
-        <form method="POST"  action="{{url_for('recipes_search')}}" class="d-flex justify-content-start ">
         
+        <form method="POST"  action="{{url_for('recipes_frames_search')}}" class="d-flex justify-content-start ">
             <input type="text" class="form-control border-right-0" id="user_query" name="user_query" placeholder="Recipe/Cuisine" style="border-radius: 5px 0 0 5px;">
-            <button class="input-group-text bg-primary text-white" type="submit" style="border-radius:  0 5px 5px 0;"><i class="fa fa-search"></i></button>
+            <button class="input-group-text bg-primary text-white" type="submit" style="border-radius:  0 5px 5px 0;"><i class="fa fa-search"></i>
+            </button> &nbsp;&nbsp;<a href="{{url_for('recipes_frames')}}" style="color:black;" > <i class="fa fa-undo" aria-hidden="true"></i></a>
         </form>
     </div>
 </div>
 
-<table class='table table-bordered'>
+<div class="card-columns">
+    {%for r in get_recipes %}
+    <div class="card">
+        <div style="background-image : url('{{r.photos[0]}}'); background-size: cover; background-position: center; background-repeat: no-repeat; height: 300px; font-family: 'Judson', serif  !important; ">
+            <button type="button" class="btn btn-primary" style="float:right;">
+                Reviews/Ratings <span class="badge badge-light">{{r.num_reviews}}/{{r.avg_likes}}</span>
+            </button>
+            {% if r.photos|length == 0 %} <div style="position:absolute; top:50%; left:50%; transform: translate(-50%, -50%); "> No Photo </div> {%endif%}
+            <div class="bg-secondary text-light rounded" style="position: absolute; bottom: 0; right:0; padding-left: 10px; padding-right:10px; padding-top: 5px; padding-bottom:5px;">
+                <a class="recipe-link" href="{{url_for('recipe_display' , recipe_id=r._id)}}" target="_blank">
+                <span style="font-size: 1em; font-family: 'Judson', serif  !important;">{{r.recipe_name}} <small class="badge badge-light"> {{r.date_posted[2:]}} </small></span>
+                </a>
+            </div>
+        </div>
+    </div>
+    {%endfor%}
+
+</div>
+
+<!-- <table class='table table-bordered'>
     <thead class='thead-light'>
         <tr>
             <th>Index</th>
@@ -101,11 +120,6 @@
 
             <td class="col-hide"> {{r.date_posted}} </td>
             
-            <!-- {%for i in get_avg_likes %}
-                {%if i._id == r._id %}
-                    <td> {{i.trunclikes}} </td>
-                {%endif%}
-            {%endfor%} -->
 
             {%if r.num_reviews == 0 %}
                 <td> Null </td>
@@ -117,6 +131,6 @@
         </tr>
         {%endfor%}
 
-</table>
+</table> -->
 
 {%endblock%}
