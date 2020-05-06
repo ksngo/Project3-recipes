@@ -35,14 +35,14 @@
     <div class="p-2" >
         <h1> Recipes 
             &nbsp;&nbsp;<a href="{{url_for('recipes')}}"><i class="fa fa-table fa-lg" aria-hidden="true" style="font-size:22px; color:black;"></i></a>
-            &nbsp;<a href="{{url_for('recipes_frames')}}"><i class="fa fa-picture-o" aria-hidden="true" style="font-size:22px;"></i> </a> 
+            &nbsp;<a href="{{url_for('recipes_frames')}}"><i class="fa fa-picture-o" aria-hidden="true" style="font-size:22px; color: rgba(255,99,71,.8);"></i> </a> 
         </h1>
     </div>
     <div class="p-2 ml-auto ">
         
         <form method="POST"  action="{{url_for('recipes_frames_search')}}" class="d-flex justify-content-start ">
             <input type="text" class="form-control border-right-0" id="user_query" name="user_query" placeholder="Recipe/Cuisine" style="border-radius: 5px 0 0 5px;">
-            <button class="input-group-text bg-primary text-white" type="submit" style="border-radius:  0 5px 5px 0;"><i class="fa fa-search"></i>
+            <button class="input-group-text bg-primary text-white" type="submit" style="border-radius:  0 5px 5px 0; "><i class="fa fa-search"></i>
             </button> 
         </form>
     </div>
@@ -52,13 +52,13 @@
     {%for r in get_recipes %}
     <div class="card">
         <div style="background-image : url('{{r.photos[0]}}'); background-size: cover; background-position: center; background-repeat: no-repeat; height: 300px; font-family: 'Judson', serif  !important; ">
-            <button type="button" class="btn btn-primary" style="float:right;">
+            <button type="button" class="btn btn-primary" style="float:right; background-color: rgba(0,125,255,.8)">
                 Reviews/Ratings <span class="badge badge-light">{{r.num_reviews}}/{{r.avg_likes}}</span>
             </button>
             {% if r.photos|length == 0 %} <div style="position:absolute; top:50%; left:50%; transform: translate(-50%, -50%); "> No Photo </div> {%endif%}
-            <div class="bg-secondary text-light rounded" style="position: absolute; bottom: 0; right:0; padding-left: 10px; padding-right:10px; padding-top: 5px; padding-bottom:5px;">
+            <div class="recipe-name-link text-light rounded" style="position: absolute; bottom: 0; right:0; padding-left: 10px; padding-right:10px; padding-top: 5px; padding-bottom:5px; background-color: rgba(255,99,71,.8)">
                 <a class="recipe-link" href="{{url_for('recipe_display' , recipe_id=r._id)}}" target="_blank">
-                <span style="font-size: 1em; font-family: 'Judson', serif  !important;">{{r.recipe_name}} <small class="badge badge-light"> {{r.date_posted[2:]}} </small></span>
+                <span style="font-size: 1em; font-family: 'Judson', serif  !important; ;">{{r.recipe_name}} <small class="badge badge-light"> {{r.date_posted[2:]}} </small></span>
                 </a>
             </div>
         </div>
@@ -133,5 +133,7 @@
         {%endfor%}
 
 </table> -->
+
+<script src="/static/public_all_recipes_frames.js"></script>
 
 {%endblock%}
