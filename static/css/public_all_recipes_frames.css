@@ -56,15 +56,6 @@
     color: rgb(0,128,255);
 }
 
-body {
-  
-  /* background-image: linear-gradient(to top, rgba(255,255,255,0.5),rgba(255,255,255,0.5)),url(/static/images/pink.jpg);
-  background-size: contain ;
-  background-color: white;
-  background-repeat: repeat;
-  height: 100vh; */
-  
-}
 
 table {
     background-color:white;
@@ -88,4 +79,15 @@ table {
 
 .bg-secondary:hover {
     background-color: rgb(99, 103, 107) !important;
+}
+
+.card-columns {
+  column-gap: 10px;
+  
+  
+}
+
+.card {
+  margin-bottom: 3px !important;
+  
 }
