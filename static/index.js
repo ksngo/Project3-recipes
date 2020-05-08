@@ -17,7 +17,7 @@ $(function (){
     )
     
 
-    setInterval(switchImage, 5000)
+    
 
 })
 
@@ -25,7 +25,7 @@ let counter =0
 
 function switchImage () {
 
-    if (document.getElementById("sample-body").style.display == ("" || "none")) {
+    if (document.getElementById("sample-body").style.display == "" || document.getElementById("sample-body").style.display == "none" ) {
     counter++
     counter = counter % bgImageArray.length 
     console.log(counter)
@@ -35,6 +35,7 @@ function switchImage () {
     } 
 }
 
+setInterval(switchImage, 5000)
 
 
 $(function(){
