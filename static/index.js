@@ -30,3 +30,25 @@ function switchImage () {
 }
 
 setInterval(switchImage, 5000)
+
+$(function(){
+
+    document.getElementById("show-recipe-sample").addEventListener("click" , showRecipeSample)
+    document.getElementsByTagName('span')[0].addEventListener("click" , closeRecipeSample)
+
+})
+
+
+function showRecipeSample() {   
+
+    document.getElementById("sample-body").style.display = "block"
+    // document.getElementsByTagName("body")[0].style.height = "10px"
+    
+}
+
+function closeRecipeSample() {
+
+    document.getElementById("sample-body").style.display = "none"
+    // document.getElementsByTagName("body")[0].style.height = "100vh"
+
+}
