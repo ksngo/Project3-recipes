@@ -35,7 +35,7 @@ function switchImage () {
     } 
 }
 
-setInterval(switchImage, 5000)
+setInterval(switchImage, 10000)
 
 
 $(function(){
