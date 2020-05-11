@@ -73,10 +73,24 @@ User Stories
 
 ## Technologies Used
 
-In this section, you should mention all of the languages, frameworks, libraries, and any other tools that you have used to construct this project. For each, provide its name, a link to its official site and a short sentence of why it was used.
-
 - [JQuery](https://jquery.com)
     - The project uses **JQuery** to simplify DOM manipulation.
+- [Google Font](https://fonts.googleapis.com)
+    - The project uses **Google Font** for some font-family.
+- [BootStrap 4.4](https://getbootstrap.com/docs/4.4/getting-started/introduction/)
+    - The project uses **BootStrap 4.4** for its framework of HTML,CSS styling & mobile responsiveness.
+- [BootStrap Icons](https://icons.getbootstrap.com/)
+    - The projects uses **BootStrap Icons** for a single font icon.
+- [FontAwesome 4.7](https://fontawesome.com/v4.7.0/)
+    - The project uses **FontAwesome 4.7** for various fonts icons.
+- [UploadCare] (https://uploadcare.com/docs/quick_start/)
+    - The project uses **Uploadcare** for uploading images management.
+- [Flask] (https://flask.palletsprojects.com/en/1.1.x/foreword/)
+    - The project uses **Flask** for flask librarys and modules.
+- [Python 3.8.2](https://www.python.org/downloads/release/python-382/)
+    - The project uses **python 3.8.2** for its python languages.
+- [MongoDB](https://www.mongodb.com/)
+    - The project uses **MongoDB** for its database.
 
 
 ## Testing
