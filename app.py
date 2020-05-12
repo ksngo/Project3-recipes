@@ -538,28 +538,50 @@ def create_account_post ():
 
     my_recipes_list=[]
     favourites_list=[]
-    email = request.form.get("email")
+    email = (request.form.get("email")).lower()
+    username = request.form.get("user-name")
 
-    client[DB_NAME].users.insert_one({
+    exist_email = client[DB_NAME].users.find_one({
+                    "email" : email
+                    })
 
-        "_id" : ObjectId(),
-        "user_name" : request.form.get("user-name"),
-        "password" : request.form.get("password"),
-        "email" : email,
-        "country" : string.capwords(request.form.get("country")),
-        "birthday" : request.form.get("birthday"),
-        "ethnicity" : string.capwords(request.form.get("ethnic")),
-        "my_recipes" : my_recipes_list,
-        "favourites" : favourites_list,
-        "first_joined" : datetime.datetime.now().strftime("%Y-%m-%d")
+    exist_username = client[DB_NAME].users.find_one({
+                    "user_name" : username
+                    })
 
-    })
+    if exist_email is not None :
+         flash(" Existing account with this email already in use. ")
 
-    get_user = client[DB_NAME].users.find_one({"email" : email})
-    user_id = get_user["_id"]
-    print("-------------------------",user_id)
+         return redirect(url_for("create_account_post"))
+    
+    elif exist_username is not None :
 
-    return redirect(url_for("my_recipes", user_id=user_id))
+        flash("Username already exists.")
+
+        return redirect(url_for("create_account_post"))
+    else :
+
+        
+        client[DB_NAME].users.insert_one({
+
+            "_id" : ObjectId(),
+            "user_name" : username,
+            "password" : request.form.get("password"),
+            "email" : email,
+            "country" : string.capwords(request.form.get("country")),
+            "birthday" : request.form.get("birthday"),
+            "ethnicity" : string.capwords(request.form.get("ethnic")),
+            "my_recipes" : my_recipes_list,
+            "favourites" : favourites_list,
+            "first_joined" : datetime.datetime.now().strftime("%Y-%m-%d")
+
+        })
+
+        get_user = client[DB_NAME].users.find_one({"email" : email})
+        user_id = get_user["_id"]
+        print("-------------------------",user_id)
+
+        return redirect(url_for("my_recipes", user_id=user_id))
 
 # -------------------------login page--------------------------------
 
