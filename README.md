@@ -107,6 +107,92 @@ For any scenarios that have not been automated, test the user stories manually a
     3. Try to submit the form with an invalid email address and verify that a relevant error message appears
     4. Try to submit the form with all inputs valid and verify that a success message appears.
 
+1. Home page:
+    - [x] Click sample recipe will show a sample recipe pop out.
+    - [x] Click "Uncover Treasures", "Login to My Account", "New Account" brings me to the desired pages.
+
+2. Recipes (table) page:
+    - [x] Navigiation bar links bring to desired pages.
+    - [x] Picture font link brings to desired page.
+    - [x] Search box by "Char" shows results of recipe "Char Kway Teow" and flash message "Search results for 'Char' ".
+    - [x] Search box by "a" shows flash message "No results for 'a' " .
+    - [x] Table sort buttons for Recipe Name able to arrange recipe name in ascending/descending order.
+    - [x] Table sort buttons for Cuisine Name able to arrange cuisine in ascending/descending order.
+    - [x] Table sort buttons for Self-rating able to arrange self-rating in ascending/descending order.
+    - [x] Table sort buttons for date Posted able to arrange dates in ascending/descending order.
+    - [x] Table sort buttons for Self-rating able to arrange self-rating in ascending/descending order.
+    - [x] Table sort buttons for Ratings able to arrange ratings in ascending/descending order.
+    - [x] Table sort buttons for Reviews able to arrange reviews in ascending/descending order.
+    - [x] Recipe Name blue link brings me to the recipe page.
+    - [x] Review number blue link brings me to the the recipe's reviews page.
+
+3. Recipes (pictures frames) page:
+    - [x] Photos displaying for individual recipes fine.
+    - [x] Photo for each recipe will refresh randomly if the recipe have more than one photo submission.
+    - [x] No photo will display in the recipe does not have photo submission.
+    - [x] Recipe name links in red button brings me to its recipe page. 
+    - [x] Search box and navigation bar working similarly to the recipes table page mentioned above.
+
+4. Individual Recipe page:
+    - [x] The ratings/reviews button brings me to the recipe's reviews/ratings page.
+    - [x] The ratings/reviews count tallies with the number of average ratings and the number of reviews made.
+    - [x] The bookmark button pops out a fill in form.
+    - [x] If the add bookmark without entering registered email & password, flash message shows "No matching email and password record."
+    - [x] If the user has already bookmarked, flash message shows "already bookmarked."
+    - [x] For success in adding bookmark, flash message shows "Added to your bookmark."
+    - [x] Other recipes names blue links brings me to their respective recipe page by same contributor.
+
+5. Login page:
+    - [x] If login without entry of email address and password, the flash message shows "No matching email and password for account. Please try again."
+    - [x] If login with entry of email address only and without password, the flash message shows "No matching email and password for account. Please try again."
+    - [x] If login with registered email address and password, page brings me to my recipes page.
+
+6. My Recipes page:
+    - [x] Navigiation bar links checked.
+    - [x] The recipe name blue link opens in a new tab for the recipe page.
+    - [x] The edit blue link brings me to edit the recipe page.
+    - [x] The delete blue link brings me to a Modal box to verify again if ok to delete or cancel.
+    - [x] Clicking cancel in the Modal box, brings me back to my recipes page.
+    - [x] Clicking ok in the Modeal box, brings me back to my recipes page and the recipe to be deleted is no longer appearing.
+    - [x] The add recipe blue linke brings me to the add recipe page.
+    - [x] My favourites dropdown buttons shows recipes I have bookmarked.
+    - [x] Clicking remove in the favourites dropdown, will refresh My Recipes page and the recipe will no longer appear in the favourites dropdown.
+
+7. Edit page:
+    - [x] Navigiation bar links checked.
+    - [x] The add/remove buttons can add new step rows or delete last step rows accordingly. Clicking on remove button will shows a popout box to verify with user ok/cancel. Ok will remove the last step. Cancel the last step will be intact.
+    - [x] The edit photos bring me to edit photos page.
+    - [x] In edit photos page, able to remove photo by checking, submitting and the page will refresh and the photo will no longer appears.
+    - [x] In edit photos page, able to add/remove more Upload image buttons by clicking on the add/remove buttons.
+    - [x] In edit photos page, able to upload image and the page will refresh with the new image appearing.
+    - [x] In edit photos page, able to return to edit page with back button.
+    - [x] Editing the every form textboxes and clicking submit return me to My Recipes page. Changes can be seen from the table. Date last edited will also be update. Re-entering the edit recipe page will still show that the changes have been stored.
+    - [x] Back button returns me to My Recipes page.
+
+8. Add Recipe page:
+    - [x] Navigiation bar links checked.
+    - [x] Populate the form and submit. Steps can be added via the add/remove buttons. Photos can be added via Upload Image button. More images can be uploaded with red add/remove buttons. After submitting, page will redirect to My Recipes page and new recipe is shown in table.
+    - [x] Back button brings me back to My Recipes page.
+    - [ ] Not populating recipe name/cuisine/my rating and proceed to submit will result in internal server error.
+
+9. My Account page:
+    - [ ] need to calibrate code 
+
+10. New Account page:
+    - [x] The required placeholder fields need to be filled in and passwords need to match for the submit button to be activiated.
+    - [x] Submit button 
+    - [ ] no repeated emails.
+    - [ ] unique user names.
+    
+
+ 
+    
+
+
+
+
+
+
 In addition, you should mention in this section how your project looks and works on different browsers and screen sizes.
 
 You should also mention in this section any interesting bugs or problems you discovered during your testing, even if you haven't addressed them yet.
