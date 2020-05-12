@@ -291,34 +291,40 @@ def edit_recipe(user_id, recipe_id):
 @app.route('/<user_id>/my_recipes/<recipe_id>/edit', methods=['POST'])
 def update_recipe(user_id, recipe_id):
     
-    ######retrieves the number of recipe steps from user post######
-    x= request.form.get("num-steps") 
+    if request.form.get("recipe-name") =="" or request.form.get("cuisine") =="" :
     
-    steps_list=[]
-    ing_list=[]
-    tools_list=[]
+        flash("Fail to save the edit due to missing Recipe Name or Cuisine. ")
+        return redirect(url_for("update_recipe", user_id=user_id , recipe_id=recipe_id))
 
-    for i in range(0,int(x)) :
-        steps_list.append(request.form.get("step-"+str(i)))
-        ing_list.append(request.form.get("ing-"+str(i)))
-        tools_list.append(request.form.get("tools-"+str(i)))
-    
+    else :
+        ######retrieves the number of recipe steps from user post######
+        x= request.form.get("num-steps") 
+        
+        steps_list=[]
+        ing_list=[]
+        tools_list=[]
 
-    client[DB_NAME].recipes.update({'_id': ObjectId(recipe_id)},{
+        for i in range(0,int(x)) :
+            steps_list.append(request.form.get("step-"+str(i)))
+            ing_list.append(request.form.get("ing-"+str(i)))
+            tools_list.append(request.form.get("tools-"+str(i)))
+        
 
-        '$set' : {
-            "recipe_name" :  string.capwords(request.form.get("recipe-name")),
-            "steps" : steps_list,
-            "ingredients" : ing_list,
-            "tools" : tools_list,
-            "cuisine" : string.capwords(request.form.get("cuisine")),
-            "my_rating" : int(request.form.get("my-rating")),
-            "number_steps" : request.form.get( "num-steps"),
-            "date_last_edited" : datetime.datetime.now().strftime("%Y-%m-%d")
-        }
-    })
+        client[DB_NAME].recipes.update({'_id': ObjectId(recipe_id)},{
 
-    return redirect(url_for("my_recipes", user_id=user_id))
+            '$set' : {
+                "recipe_name" :  string.capwords(request.form.get("recipe-name")),
+                "steps" : steps_list,
+                "ingredients" : ing_list,
+                "tools" : tools_list,
+                "cuisine" : string.capwords(request.form.get("cuisine")),
+                "my_rating" : int(request.form.get("my-rating")),
+                "number_steps" : request.form.get( "num-steps"),
+                "date_last_edited" : datetime.datetime.now().strftime("%Y-%m-%d")
+            }
+        })
+
+        return redirect(url_for("my_recipes", user_id=user_id))
 
 # ------------------ EDIT images page -----------------------------------------
 @app.route('/<user_id>/my_recipes/<recipe_id>/edit_images')
@@ -462,67 +468,72 @@ def add_recipe(user_id) :
 @app.route("/<user_id>/add_recipe", methods=["POST"])
 def add_recipe_post(user_id) :
 
-    ##### update info into recipes database ######
-    num_steps = request.form.get("num-steps-np")
-
-    steps_list=[]
-    ing_list=[]
-    tools_list=[]
-    likes_list=[]
+    if request.form.get("recipe-name") =="" or request.form.get("cuisine") =="" or request.form.get("my-rating") =="Choose..." :
     
+        flash("Unable to add recipe because of missing Recipe Name, Cuisine or My Rating.")
+        return redirect(url_for("add_recipe_post", user_id=user_id))
 
-    for i in range(0, int(num_steps)):
-        steps_list.append(request.form.get("step-"+str(i)))
-        ing_list.append(request.form.get("ing-"+str(i)))
-        tools_list.append(request.form.get("tools-"+str(i)))
+    else:
 
-    num_images = request.form.get("num-images-np")
-    images_list=[]
-    print("--------------------testing no image---------------------")
-    print(images_list)
+        ##### update info into recipes database ######
+        num_steps = request.form.get("num-steps-np")
+
+        steps_list=[]
+        ing_list=[]
+        tools_list=[]
+        likes_list=[]
+        
+
+        for i in range(0, int(num_steps)):
+            steps_list.append(request.form.get("step-"+str(i)))
+            ing_list.append(request.form.get("ing-"+str(i)))
+            tools_list.append(request.form.get("tools-"+str(i)))
+
+        num_images = request.form.get("num-images-np")
+        images_list=[]
+        
+        for i in range(0, int(num_images)):
+            if request.form.get("image-"+str(i)) : 
+                images_list.append(request.form.get("image-"+str(i)))
+
+        client[DB_NAME].recipes.insert_one({
+            "_id" : ObjectId(),
+            "recipe_name" : string.capwords(request.form.get("recipe-name")),
+            "steps" : steps_list,
+            "ingredients" : ing_list,
+            "tools" : tools_list,
+            "cuisine" : string.capwords(request.form.get("cuisine")),
+            "photos" : images_list,
+            "my_rating" : int(request.form.get("my-rating")),
+            "likes" : likes_list,
+            "user_id" : user_id,
+            "date_posted" : datetime.datetime.now().strftime("%Y-%m-%d"),
+            "date_last_edited": "null",
+            "number_steps" : request.form.get("num-steps-np"),
+            "avg_likes" : 0 ,
+            "num_reviews" : 0 
+
+        })
+
+        #####update recipe id into users database#####
+        get_recipe_id = client[DB_NAME].recipes.find_one({
+                        "user_id" : user_id ,
+                        "recipe_name" : string.capwords(request.form.get("recipe-name")),
+                        "number_steps" : request.form.get("num-steps-np"),
+                        "my_rating" : int(request.form.get("my-rating")),
+                        "steps" : steps_list,
+                        "ingredients" : ing_list,
+                        "tools" : tools_list,
+                        })
+
+        recipe_id= get_recipe_id["_id"]
     
-    for i in range(0, int(num_images)):
-        if request.form.get("image-"+str(i)) : 
-            images_list.append(request.form.get("image-"+str(i)))
+        client[DB_NAME].users.update_one(
+            { "_id" : ObjectId(user_id)}, 
+            { "$push" : { "my_recipes" : recipe_id } }
+        )
 
-    client[DB_NAME].recipes.insert_one({
-        "_id" : ObjectId(),
-        "recipe_name" : string.capwords(request.form.get("recipe-name")),
-        "steps" : steps_list,
-        "ingredients" : ing_list,
-        "tools" : tools_list,
-        "cuisine" : string.capwords(request.form.get("cuisine")),
-        "photos" : images_list,
-        "my_rating" : int(request.form.get("my-rating")),
-        "likes" : likes_list,
-        "user_id" : user_id,
-        "date_posted" : datetime.datetime.now().strftime("%Y-%m-%d"),
-        "date_last_edited": "null",
-        "number_steps" : request.form.get("num-steps-np"),
-        "avg_likes" : 0 ,
-        "num_reviews" : 0 
-
-    })
-
-    #####update recipe id into users database#####
-    get_recipe_id = client[DB_NAME].recipes.find_one({
-                    "user_id" : user_id ,
-                    "recipe_name" : string.capwords(request.form.get("recipe-name")),
-                    "number_steps" : request.form.get("num-steps-np"),
-                    "my_rating" : int(request.form.get("my-rating")),
-                    "steps" : steps_list,
-                    "ingredients" : ing_list,
-                    "tools" : tools_list,
-                    })
-
-    recipe_id= get_recipe_id["_id"]
-   
-    client[DB_NAME].users.update_one(
-        { "_id" : ObjectId(user_id)}, 
-        { "$push" : { "my_recipes" : recipe_id } }
-    )
-
-    return redirect(url_for("my_recipes", user_id=user_id ))
+        return redirect(url_for("my_recipes", user_id=user_id ))
 
 # -----------------------create account page---------------------------------------
 
