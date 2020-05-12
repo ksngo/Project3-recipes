@@ -9,6 +9,7 @@ document.getElementById("password").addEventListener("keyup", readySubmitButton)
 document.getElementById("password-rekey").addEventListener("keyup", readySubmitButton)
 document.getElementById("email").addEventListener("keyup", readySubmitButton)
 document.getElementById("country").addEventListener("keyup", readySubmitButton)
+checkPassword()
 
 })
 

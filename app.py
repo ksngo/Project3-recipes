@@ -199,25 +199,63 @@ def account(user_id):
 @app.route('/<user_id>/' , methods=['POST'])
 def update_account(user_id):
     
-    user_name = request.form.get('user-name')
-    print('------------------------', user_name)
+    original_email = request.form.get('email-hidden')
+    current_email = (request.form.get('email')).lower()
+    print(original_email)
+    print(current_email)
+    
+    ##### if user changes his email #####
+    if original_email != current_email :
+    
+        exist_email = client[DB_NAME].users.find_one({
+                    "email" : request.form.get('email')
+                    })
 
-    client[DB_NAME].users.update_one({
-        '_id':ObjectId(user_id)
-    }, {
-        "$set": {
-            'user_name' : request.form.get('user-name'),
-            'password' : request.form.get('password'),
-            'email' : request.form.get('email'),
-            'country' : string.capwords(request.form.get('country')),
-            'birthday' : request.form.get('birthday'),
-            'ethnicity' : string.capwords(request.form.get('ethnic'))
-        }
-    })
+        ##### if changed email already exists somewhere in database #####
+        if exist_email is not None :
 
-    flash("Your Account has been updated.")
+            flash(" Failed to update account because email already registered by an existing user.  ")
+            return redirect(url_for('account', user_id=user_id))
 
-    return redirect(url_for('account', user_id=user_id))
+        #####proceeds to update email in database#####
+        else:
+
+            client[DB_NAME].users.update_one({
+                '_id':ObjectId(user_id)
+            }, {
+                "$set": {
+                    'user_name' : request.form.get('user-name'),
+                    'password' : request.form.get('password'),
+                    'email' : current_email,
+                    'country' : string.capwords(request.form.get('country')),
+                    'birthday' : request.form.get('birthday'),
+                    'ethnicity' : string.capwords(request.form.get('ethnic'))
+                }
+            })
+
+            flash("Your Account has been updated.")
+
+            return redirect(url_for('account', user_id=user_id))
+
+    ##### if user does not make changes to his email #####
+    else :
+
+        client[DB_NAME].users.update_one({
+            '_id':ObjectId(user_id)
+        }, {
+            "$set": {
+                'user_name' : request.form.get('user-name'),
+                'password' : request.form.get('password'),
+                'email' : current_email,
+                'country' : string.capwords(request.form.get('country')),
+                'birthday' : request.form.get('birthday'),
+                'ethnicity' : string.capwords(request.form.get('ethnic'))
+            }
+        })
+
+        flash("Your Account has been updated.")
+
+        return redirect(url_for('account', user_id=user_id))
 
 # ---------------------------my recipes page----------------------------------------
 
