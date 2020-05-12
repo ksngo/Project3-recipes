@@ -35,8 +35,8 @@
 <div class="d-flex align-items-center" style="margin-top:20px; margin-bottom:20px;" >
     <div class="p-2" >
         <h1> Recipes 
-            &nbsp;&nbsp;<a href="{{url_for('recipes')}}"><i class="fa fa-table fa-lg" aria-hidden="true" style="font-size:22px; color: rgba(255,99,71,.8);"></i></a>
-            &nbsp;<a href="{{url_for('recipes_frames')}}"><i class="fa fa-picture-o" aria-hidden="true" style="font-size:22px; color:black;"></i> </a> 
+            &nbsp;&nbsp; <a href="{{url_for('recipes_frames')}}"><i class="fa fa-picture-o" aria-hidden="true" style="font-size:22px; color:black;"></i> </a>
+            &nbsp; <a href="{{url_for('recipes')}}"><i class="fa fa-table fa-lg" aria-hidden="true" style="font-size:22px; color: rgba(255,99,71,.8);"></i></a>
         </h1>
         
     </div>
@@ -91,7 +91,7 @@
         
         <tr>
             <td>{{loop.index}}</td>
-            <td> <a href= '{{url_for('recipe_display' , recipe_id=r._id)}}'>{{r.recipe_name}}</a> </td>
+            <td> <a href= '{{url_for('recipe_display' , recipe_id=r._id)}}' target="_blank" >{{r.recipe_name}}</a> </td>
             <td class="col-hide-430"> {{r.cuisine}}</td>
             {%for i in get_users %}
                 {%if i._id|string() == r.user_id|string() %}

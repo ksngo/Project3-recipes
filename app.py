@@ -201,8 +201,6 @@ def update_account(user_id):
     
     original_email = request.form.get('email-hidden')
     current_email = (request.form.get('email')).lower()
-    print(original_email)
-    print(current_email)
     
     ##### if user changes his email #####
     if original_email != current_email :
