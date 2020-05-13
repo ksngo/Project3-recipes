@@ -4,6 +4,7 @@ Recipesuccess is a website that user can saved his/her recipes here and is also 
 I want to ensure that user has an easy time referring to his/her own recipes hence the recipe display is structured in table format with each row
 storing a particular step and relating ingredients/tools/tips. The organised structure will also be beneficial for the public to see how ingredients/tips/tools are used for every step. It will look less daunting and user
 has a higher chance to cook the recipe. The organised structure giving viewer a bird eye view of the whole recipe process enables ease and confidence to tweak any aspects of the recipe to his/her own convenience.
+My deployed website is [here](https://nks-project3-mongodb.herokuapp.com/).
 
 ## UX
  
@@ -71,6 +72,10 @@ User Stories
 - New Account (feature Submit Button becoming unclickable ) - allows user to unable to submit his form if either "username","matching passwords","email" or "country" is/are absent, by making unresponsive effect on submit button.
 - New Account (feature cancel button) allows user to return to previous page, by clicking on the button.
 
+### Features Left to Implement
+- Can possibly think of altering the review feature to become a feedback feature and each feedback allows posting of comments by public or recipe owner.
+
+
 ## Technologies Used
 
 - [JQuery](https://jquery.com)
@@ -95,18 +100,6 @@ User Stories
 
 ## Testing
 
-In this section, you need to convince the assessor that you have conducted enough testing to legitimately believe that the site works well. Essentially, in this part you will want to go over all of your user stories from the UX section and ensure that they all work as intended, with the project providing an easy and straightforward way for the users to achieve their goals.
-
-Whenever it is feasible, prefer to automate your tests, and if you've done so, provide a brief explanation of your approach, link to the test file(s) and explain how to run them.
-
-For any scenarios that have not been automated, test the user stories manually and provide as much detail as is relevant. A particularly useful form for describing your testing process is via scenarios, such as:
-
-1. Contact form:
-    1. Go to the "Contact Us" page
-    2. Try to submit the empty form and verify that an error message about the required fields appears
-    3. Try to submit the form with an invalid email address and verify that a relevant error message appears
-    4. Try to submit the form with all inputs valid and verify that a success message appears.
-
 1. Home page:
     - [x] Click sample recipe will show a sample recipe pop out.
     - [x] Click "Uncover Treasures", "Login to My Account", "New Account" brings me to the desired pages.
@@ -128,8 +121,8 @@ For any scenarios that have not been automated, test the user stories manually a
 
 3. Recipes (pictures frames) page:
     - [x] Photos displaying for individual recipes fine.
-    - [x] Photo for each recipe will refresh randomly if the recipe have more than one photo submission.
-    - [x] No photo will display in the recipe does not have photo submission.
+    - [x] With visiting the page, Photo for each recipe will refresh randomly if the recipe have more than one photo submission.
+    - [x] No photo text will display in the recipe which does not have photo submission.
     - [x] Recipe name links in red button brings me to its recipe page. 
     - [x] Search box and navigation bar working similarly to the recipes table page mentioned above.
 
@@ -173,52 +166,43 @@ For any scenarios that have not been automated, test the user stories manually a
     - [x] Navigiation bar links checked.
     - [x] Populate the form and submit. Steps can be added via the add/remove buttons. Photos can be added via Upload Image button. More images can be uploaded with red add/remove buttons. After submitting, page will redirect to My Recipes page and new recipe is shown in table.
     - [x] Back button brings me back to My Recipes page.
-    - [ ] Not populating recipe name/cuisine/my rating and proceed to submit will result in internal server error.
+    - [x] Not populating recipe name/cuisine/my rating and proceed to submit will result in fail flash message.
 
 9. My Account page:
-    - [ ] need to calibrate code 
+    - [x] Not filling UserName , password which doesn't matches, not fill email & country. Any of the above will result in submit button to turn semi-opaque or unclickable.
+    - [x] Switching email that coincides with another existing user account will prompts error message "Failed to update account because email already registered by an existing user."
+    - [x] Changing email with upperlettercase characters will always saved in system in lowercases.
+    - [x] If password does not match, a red prompt will show "Passoword does not match".
+    - [x] If password matches, a green prompt will show "Password matches".
+    - [x] Upon success submission by clicking submit button, will return to My account page with flash message "Your Account has been updated" and all changes updated too.
+    - [x] Exit button brings me back to My Recipes page.
 
 10. New Account page:
-    - [x] The required placeholder fields need to be filled in and passwords need to match for the submit button to be activiated.
-    - [x] Submit button 
-    - [ ] no repeated emails.
-    - [ ] unique user names.
+    - [x] The required placeholder fields need to be filled in and passwords need to match for the submit button to be activiated or clickable.
+    - [x] If password does not match, a red prompt will show "Passoword does not match".
+    - [x] If password matches in both textboxes, a green prompt will show "Password matches".
+    - [x] If Password textbox is empty, a red prompt will show "Password missing".
+    - [x] Upon clicking submit button and if email already been used before in database, a flash message will show " Existing account with this email already in use".
+    - [x] Upon successful submission on clicking submit button, user will be redirected to "My recipes page". Going to My Account page, I can see that the create to database and read from database is successful.
+    - [x] Exit button brings me back to My recipes page.
+
+The project looks fine across different browsers like edge, chrome or firefox. I am using chrome primarily most of the time when debugging.
+In smaller devices, I have reduce the columns in the tables in "My recipes page" & "Recipes page" so that the table of content will generally be confined in the constraint of the device width.
+Due to associating most of the primary tags with bootstrap CSS, hence the contents mobile responsives are pretty much organised and set by bootstrap already.
     
-
- 
-    
-
-
-
-
-
-
-In addition, you should mention in this section how your project looks and works on different browsers and screen sizes.
-
-You should also mention in this section any interesting bugs or problems you discovered during your testing, even if you haven't addressed them yet.
-
-If this section grows too long, you may want to split it off into a separate file and link to it from here.
-
 ## Deployment
 
-This section should describe the process you went through to deploy the project to a hosting platform (e.g. GitHub Pages or Heroku).
-
-In particular, you should provide all details of the differences between the deployed version and the development version, if any, including:
-- Different values for environment variables (Heroku Config Vars)?
-- Different configuration files?
-- Separate git branch?
-
-In addition, if it is not obvious, you should also describe how to run your code locally.
-
+This website is deployed to hosting platform Heroku from this git origin master branch.
+For running the codes locally, advise to run "pip3 install -r requirements.txt" in your IDE first to install the necessary libraries.
 
 ## Credits
 
 ### Content
-- The text for section Y was copied from the [Wikipedia article Z](https://en.wikipedia.org/wiki/Z)
+- The recipes are copied from a book "Patchwork of Flavours, A collection of recipes from the generation before" by NTU Welfare Services Club published in 2007.
 
 ### Media
-- The photos used in this site were obtained from ...
+- The photos used in this site were obtained from [PixaBay](https://pixabay.com/).
 
 ### Acknowledgements
 
-- I received inspiration for this project from X
+- I received inspiration for this project from project example idea for Data Centric Development Milestone Project by [Code Institute](https://codeinstitute.net/).

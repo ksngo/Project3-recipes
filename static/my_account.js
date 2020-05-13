@@ -9,7 +9,12 @@ document.getElementById("password").addEventListener("keyup", readySubmitButton)
 document.getElementById("password-rekey").addEventListener("keyup", readySubmitButton)
 document.getElementById("email").addEventListener("keyup", readySubmitButton)
 document.getElementById("country").addEventListener("keyup", readySubmitButton)
-checkPassword()
+
+if (document.getElementById("password").value != "" ) {
+    
+    checkPassword()
+}
+
 
 })
 
@@ -18,12 +23,19 @@ function checkPassword() {
 
     password = document.getElementById('password').value
     passwordRekey = document.getElementById('password-rekey').value
-    if (password == passwordRekey) {
+
+
+    if (document.getElementById("password").value == "" ) {
+
+        document.getElementById('pw-span').innerHTML = "&emsp; Password missing."
+        document.getElementById('pw-span').style.color ='red'
+
+    } else if (password == passwordRekey) {
 
         document.getElementById('pw-span').innerHTML = "&emsp; Password matches"
         document.getElementById('pw-span').style.color ='green'
 
-    } else {
+    }  else {
 
         document.getElementById('pw-span').innerHTML = "&emsp; Password does not match"
         document.getElementById('pw-span').style.color ='red'
