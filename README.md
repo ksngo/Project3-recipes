@@ -88,9 +88,9 @@ User Stories
     - The projects uses **BootStrap Icons** for a single font icon.
 - [FontAwesome 4.7](https://fontawesome.com/v4.7.0/)
     - The project uses **FontAwesome 4.7** for various fonts icons.
-- [UploadCare] (https://uploadcare.com/docs/quick_start/)
+- [UploadCare](https://uploadcare.com/docs/quick_start/)
     - The project uses **Uploadcare** for uploading images management.
-- [Flask] (https://flask.palletsprojects.com/en/1.1.x/foreword/)
+- [Flask](https://flask.palletsprojects.com/en/1.1.x/foreword/)
     - The project uses **Flask** for flask librarys and modules.
 - [Python 3.8.2](https://www.python.org/downloads/release/python-382/)
     - The project uses **python 3.8.2** for its python languages.
