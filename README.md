@@ -202,7 +202,3 @@ For running the codes locally, advise to run "pip3 install -r requirements.txt" 
 
 ### Media
 - The photos used in this site were obtained from [PixaBay](https://pixabay.com/).
-
-### Acknowledgements
-
-- I received inspiration for this project from project example idea for Data Centric Development Milestone Project by [Code Institute](https://codeinstitute.net/).
